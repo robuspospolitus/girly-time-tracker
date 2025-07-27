@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from "axios";
-import '../Styles/List.css';
+import '../Styles/List.scss';
 
 export default function List() {
   const today = new Date()

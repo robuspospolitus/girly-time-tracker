@@ -1,17 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Icon from '@mdi/react';
 import { mdiArrowLeft } from '@mdi/js';
 import List from "./Components/List";
 import Menu from "./Components/Menu";
+import Settings from "./Components/Settings";
 
 function App() {
   const [page, setPage] = useState('menu');
+  const [theme, setTheme] = useState('theme-light-orange');
+
   return (
+    <div className={theme+ ' background'}>
     <div id="main-app">
-      { page != 'menu' && <div className="goback" onClick={() => setPage('menu')}> <Icon path={mdiArrowLeft} className="gobackicon" title="arrow-left" size={1} color="white"/></div>}
+      { page !== 'menu' && <div className="goback" onClick={() => setPage('menu')}> <Icon path={mdiArrowLeft} className="gobackicon" title="arrow-left" size={1} color="white"/></div>}
       <h1>Girly Time Tracker</h1>
-      { page == 'menu' && <Menu setPage={setPage}/>}
-      { page == 'list' && <List/>}
+      { page === 'menu' && <Menu setPage={setPage}/>}
+      { page === 'list' && <List/>}
+      { page === 'settings' && <Settings setTheme={setTheme}/>}
+    </div>
     </div>
   );
 }

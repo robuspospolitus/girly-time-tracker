@@ -8,11 +8,11 @@
     margin: auto;
     margin-bottom: 8px;
     border-radius: 10px;
-    border-left: 2px solid rgba(224, 98, 119, 0.2);
-    border-top: 2px solid rgb(224, 98, 119, 0.2);
-    border-right: 2px solid rgb(139, 43, 59, 0.2);
-    border-bottom: 2px solid rgb(139, 43, 59, 0.2);
-    background-color: rgb(255, 255, 255);
+    border-left: 2px solid var(--border-item-1);
+    border-top: 2px solid var(--border-item-1);
+    border-right: 2px solid var(--border-item-2);
+    border-bottom: 2px solid var(--border-item-2);
+    background-color: var(--item-background);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -21,7 +21,7 @@
     font-size: 25px;
     font-weight: bold;
     /* color: #7a2020; */
-    color: #6d3126;
+    color: var(--text-primary);
     /* color: rgb(148, 93, 93); */
     text-align: center;
     width: 100%;

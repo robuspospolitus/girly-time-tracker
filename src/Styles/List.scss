@@ -9,10 +9,10 @@
 .save-btn {
     width: 110px;
     height: 24px;
-    background-color: #ffb5ce;
+    background-color: var(--secondary);
     font-size: 17px;
     font-weight: 600;
-    color: #7a2020;
+    color: var(--text-secondary);
     margin-left: 5px;
 }
 input {
@@ -24,10 +24,10 @@ input {
 }
 
 input, .save-btn, #static-total {
-    border-left: 2px solid rgba(224, 98, 119, 0.5);
-    border-top: 2px solid rgb(224, 98, 119, 0.5);
-    border-right: 2px solid rgb(139, 43, 59, 0.5);
-    border-bottom: 2px solid rgb(139, 43, 59, 0.5);
+    border-left: 2px solid var(--border-input-1);
+    border-top: 2px solid var(--border-input-1);
+    border-right: 2px solid var(--border-input-2);
+    border-bottom: 2px solid var(--border-input-2);
     border-radius: 8px;
     font-family: 'Times New Roman', Times, serif;
     
@@ -37,11 +37,11 @@ input, .save-btn, #static-total {
     height: 50px;
     margin: auto;
     border-radius: 10px;
-    border-left: 2px solid rgba(224, 98, 119, 0.2);
-    border-top: 2px solid rgb(224, 98, 119, 0.2);
-    border-right: 2px solid rgb(139, 43, 59, 0.2);
-    border-bottom: 2px solid rgb(139, 43, 59, 0.2);
-    background-color: rgb(255, 255, 255);
+    border-left: 2px solid var(--border-item-1);
+    border-top: 2px solid var(--border-item-1);
+    border-right: 2px solid var(--border-item-2);
+    border-bottom: 2px solid var(--border-item-2);
+    background-color: var(--item-background);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -57,6 +57,7 @@ input, .save-btn, #static-total {
     text-align: end;
     font-size: 25px;
     width: 55%;
+    color: var(--hours);
 }
 .delete {
     background-color: #c75d5d;
@@ -74,7 +75,7 @@ input, .save-btn, #static-total {
     width: 408px;
     height: 48px;
     margin: 5px;
-    background-color: rgb(255, 255, 255);
+    background-color: var(--item-background);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -86,7 +87,7 @@ input, .save-btn, #static-total {
 h2 {
     width: 100%;
     text-align: center;
-    color: #7a2020;
+    color: var(--text-secondary);
 }
 
 
@@ -95,5 +96,5 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 input[type=number] {
-    -moz-appearance:textfield; /* Firefox */
+    appearance:textfield; /* Firefox */
 }
