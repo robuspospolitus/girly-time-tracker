@@ -13,11 +13,12 @@ function createWindow() {
         
     });
     const userDataPath = app.getPath('userData');
-    console.log("🔧 Używam folderu:", userDataPath);
 
     serverProcess = fork(path.join(__dirname, 'server', 'server.js'), [userDataPath]);
 
-    win.loadFile(path.join(__dirname, 'build', 'index.html'));
+    // win.loadFile(path.join(__dirname, 'build', 'index.html'));
+    win.loadURL('http://localhost:3000')
+    win.webContents.openDevTools();
     win.setMenu(null);
     
 }

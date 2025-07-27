@@ -107,8 +107,8 @@ input, .save-btn, #static-total {
 }
 
 #static-total{
-    width: 420px;
-    height: 60px;
+    width: 408px;
+    height: 48px;
     margin: 5px;
     background-color: rgb(255, 255, 255);
     display: flex;
@@ -117,6 +117,7 @@ input, .save-btn, #static-total {
     position: fixed;
     bottom: 20px;
     text-align: center;
+    padding: 8px;
 }
 h2 {
     width: 100%;
