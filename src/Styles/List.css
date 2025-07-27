@@ -1,0 +1,99 @@
+#form {
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    align-items: center;
+    width: 340px;
+    margin: auto;
+}
+.save-btn {
+    width: 110px;
+    height: 24px;
+    background-color: #ffb5ce;
+    font-size: 17px;
+    font-weight: 600;
+    color: #7a2020;
+    margin-left: 5px;
+}
+input {
+    width: 100px;
+    height: 20px;
+    text-align: center;
+    margin: 5px;
+    font-size: 18px;
+}
+
+input, .save-btn, #static-total {
+    border-left: 2px solid rgba(224, 98, 119, 0.5);
+    border-top: 2px solid rgb(224, 98, 119, 0.5);
+    border-right: 2px solid rgb(139, 43, 59, 0.5);
+    border-bottom: 2px solid rgb(139, 43, 59, 0.5);
+    border-radius: 8px;
+    font-family: 'Times New Roman', Times, serif;
+    
+}
+.item{
+    width: 400px;
+    height: 50px;
+    margin: auto;
+    border-radius: 10px;
+    border-left: 2px solid rgba(224, 98, 119, 0.2);
+    border-top: 2px solid rgb(224, 98, 119, 0.2);
+    border-right: 2px solid rgb(139, 43, 59, 0.2);
+    border-bottom: 2px solid rgb(139, 43, 59, 0.2);
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.date {
+    font-size: 25px;
+    padding-left: 25px;
+    color: #616161;
+}
+
+.hours {
+    text-align: end;
+    font-size: 25px;
+    width: 55%;
+}
+.delete {
+    background-color: #c75d5d;
+    color: white;
+    border: 0px;
+    height: 15px;
+    width: 15px;
+    font-size: 12px;
+    border-radius: 10px;
+    margin-left: 15px;
+    align-items: center;
+}
+
+#static-total{
+    width: 408px;
+    height: 48px;
+    margin: 5px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: fixed;
+    bottom: 20px;
+    text-align: center;
+    padding: 8px;
+}
+h2 {
+    width: 100%;
+    text-align: center;
+    color: #7a2020;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}

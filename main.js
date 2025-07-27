@@ -16,9 +16,8 @@ function createWindow() {
 
     serverProcess = fork(path.join(__dirname, 'server', 'server.js'), [userDataPath]);
 
-    // win.loadFile(path.join(__dirname, 'build', 'index.html'));
-    win.loadURL('http://localhost:3000')
-    win.webContents.openDevTools();
+    win.loadFile(path.join(__dirname, 'build', 'index.html'));
+    // win.loadURL('http://localhost:3000')
     win.setMenu(null);
     
 }
