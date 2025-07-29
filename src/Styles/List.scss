@@ -15,12 +15,18 @@
     color: var(--text-secondary);
     margin-left: 5px;
 }
+.save-btn:hover {
+    filter: brightness(95%);
+}
 input {
     width: 100px;
     height: 20px;
     text-align: center;
     margin: 5px;
     font-size: 18px;
+}
+input:hover {
+    filter: brightness(96%);
 }
 
 input, .save-btn, #static-total {
@@ -32,6 +38,41 @@ input, .save-btn, #static-total {
     font-family: 'Times New Roman', Times, serif;
     
 }
+.select-category{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 32px;
+    .select {
+        width: 70%;
+        min-height: 30px;
+        border-left: 2px solid var(--border-input-1);
+        border-top: 2px solid var(--border-input-1);
+        border-right: 2px solid var(--border-input-2);
+        border-bottom: 2px solid var(--border-input-2);
+        border-radius: 8px;
+        background-color: white;
+        .select-cat-title {
+            height: 30px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            .select-subtitle {
+                width: 100%;
+                font-size: 18px;
+                margin-left: 8px;
+                color: #616161
+            }
+        }
+        .select-cat-title:hover {
+            background-color: #0000000a;
+        }
+    }
+}
+
+
+
 .item{
     width: 400px;
     height: 50px;
@@ -69,6 +110,9 @@ input, .save-btn, #static-total {
     border-radius: 10px;
     margin-left: 15px;
     align-items: center;
+}
+.delete:hover {
+    background-color: #a74e4e;
 }
 
 #static-total{

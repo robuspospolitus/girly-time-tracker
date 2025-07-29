@@ -28,10 +28,17 @@
   });
 
   // PUT - zamień dane w JSON
-  // app.put('/api/data', (req, res) => {
-  //     fs.writeFileSync(dataPath, JSON.stringify(req.body, null, 2));
-  //     res.json({ status: 'OK', newData: req.body });
-  // });
+  app.put('/api/data', (req, res) => {
+    try {
+      const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+      data[0].push(req.body);
+      fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
+      res.json(data[0]);
+    } catch (err) {
+      console.error('Błąd w PUT:', err);
+      res.status(500).json({ error: 'Błąd serwera' });
+    }
+  });
 
   // POST - dodaj dane do JSON
   app.post('/api/data/:category', (req, res) => {

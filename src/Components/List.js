@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import '../Styles/List.scss';
+import Icon from '@mdi/react';
+import { mdiMenuDown, mdiMenuLeft } from '@mdi/js';
 
-export default function List() {
+export default function List({ categories }) {
   const today = new Date()
   const todaysdate = String(today.getDate()).padStart(2, '0')+'/'+String(today.getMonth() + 1).padStart(2, '0')+'/'+ today.getFullYear();
   const dateid = String(today.getDate()).padStart(2, '0')+String(today.getMonth() + 1).padStart(2, '0')+ today.getFullYear()+today.getHours()+today.getMinutes()+today.getSeconds()+today.getMilliseconds();
   const [items, setItems] = useState([]);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
-  const [category, setCategory] = useState('programming');
-
+  const [category, setCategory] = useState('');
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/data").then((response) => {
@@ -21,8 +23,8 @@ export default function List() {
 
   const deleteItem = (id) => {
     axios.delete(`http://localhost:5000/api/data/${category}/${id}`).then((response) => {
-      setItems({...items, programming: response.data});
-      console.log({...items, programming: response.data});
+      setItems({...items,  [category]: response.data});
+      console.log({...items, [category]: response.data});
     });
   };
 
@@ -30,16 +32,16 @@ export default function List() {
     if(hours >= 0 && hours <=23 && minutes >= 0 && minutes <= 59) {
         const time = parseInt(hours) + parseFloat((minutes / 60).toFixed(2));
         axios.post(`http://localhost:5000/api/data/${category}`, { id: dateid, date: todaysdate, hours: time }).then((response) => {
-          setItems({...items, programming: response.data});
-          console.log({...items, programming: response.data});
+          setItems({...items, [category]: response.data});
+          console.log({...items, [category]: response.data});
         });
   }};
 
   const handleTime = () => {
     let totalTime = 0;
-    const length = items.programming ? items.programming.length : 0;
+    const length = items[category] ? items[category].length : 0;
     for (let i = 0; i < length; i++){
-      totalTime = parseFloat((totalTime + items.programming[i].hours).toFixed(2));
+      totalTime = parseFloat((totalTime + items[category][i].hours).toFixed(2));
     }
     return totalTime
   }
@@ -51,17 +53,30 @@ export default function List() {
         <input name="minutes" max={59} min={0} type="number" maxLength={2} placeholder="Minutes" onChange={(e) => setMinutes(e.target.value)}/>
         <button className="save-btn" onClick={(e) => addItem()}>Save Time</button>
       </div>
+      <div className='select-category'>
+        <div className='select'>
+          <div className='select-cat-title' onClick={() => setOpen(!open)}>
+            <p className='select-subtitle'>{category ? category : 'Choose a category...'}</p>
+            <Icon path={open ? mdiMenuDown : mdiMenuLeft} color='#616161' size={1}/>
+          </div>
+          { open && categories.map(cat => (
+            <div className='select-cat-title' key={cat} onClick={() => {setCategory(cat); setOpen(false)}}>
+              <p className='select-subtitle' style={{marginLeft: '12px'}}>{cat}</p>
+            </div>
+          ))}
+        </div>
+      </div>
       <div className="list">
-        { Array.isArray(items.programming) && items.programming.map((item) => (
+        { Array.isArray(items[category]) && items[category].map((item) => (
           <div className="item" key={item.id}>
             <div className="date">{item.date}</div>
             <div className="hours">{item.hours} hours</div>
-            <button className="delete" onClick={(e) => deleteItem(item.id)}>x</button>
+            <button className="delete" onClick={() => deleteItem(item.id)}>x</button>
           </div>
         ))}
       </div>
       <div id="static-total">
-        <h2>You spent {handleTime()} hours programming in total {":>"}</h2>
+        <h2>{category ? `You spent ${handleTime()} hours of doing ${category} in total ${":>"}` : 'Choose a category to see your progress'}</h2>
       </div>
     </>
   )

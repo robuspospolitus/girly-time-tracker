@@ -16,6 +16,11 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    cursor: pointer;
+}
+.mainitem {
+    color: var(--text-secondary) !important;
+    background-color: var(--secondary);
 }
 .menuitemp {
     font-size: 25px;

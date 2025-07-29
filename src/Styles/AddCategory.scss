@@ -1,0 +1,53 @@
+.addcategory {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    .addcategory-input {
+        margin: 30px;
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        #addcategory {
+            width: 100%;
+            height: 35px;
+            margin: 0;
+            box-sizing: border-box;
+        }
+    }
+    .addsave {
+        width: 90%;
+        margin: 10px 0 0 0;
+        height: 25px;
+    }
+    .addcategory-list {
+        margin: 8px;
+
+        .addcategory-category {
+            width: 400px;
+            min-height: 50px;
+            margin: auto;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            border-left: 2px solid var(--border-item-1);
+            border-top: 2px solid var(--border-item-1);
+            border-right: 2px solid var(--border-item-2);
+            border-bottom: 2px solid var(--border-item-2);
+            background-color: var(--item-background);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .addlabel {
+                text-align: left;
+                margin-left: 16px;
+            }
+
+            .deleteaddcategory {
+                margin: auto 16px auto auto;
+            }
+        }
+    }
+}

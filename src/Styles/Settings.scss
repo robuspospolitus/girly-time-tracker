@@ -16,6 +16,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    
 }
 .settingstitle {
     width: 400px;
@@ -24,6 +25,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    cursor: pointer;
 }
 .settingsitemp {
     font-size: 25px;
@@ -49,4 +51,5 @@
     margin: 5px;
     margin-left: 16px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    cursor: pointer;
 }
