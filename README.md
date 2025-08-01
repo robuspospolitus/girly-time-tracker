@@ -38,7 +38,8 @@ New logo
 And more to come... (Imagination is the limit)
 
 
-## How to use?
+## How to install?
+
 First open the terminal in the project directory.
 
 Check if in main.js loadURL is commented. It can slip off my mind. Should look like this: 
@@ -51,11 +52,17 @@ Type `npm run build` and press enter. It can take a while
 
 After it's done building, go to `dist` folder.
 
-Open the `GirlyTimeTracker Setup 0.1.x.exe` file. 
-
-It will download the app on your computer and make a shortcut on desktop. 
+Just extract the `GirlyTimeTracker 0.1.x.exe` file wherever you'd like and that's it!
 
 There is no need to keep the repository afterwards.
+
+## How to use?
+
+Open `GirlyTimeTracker 0.1.x.exe`.
+
+First you need to add a category by clicking 'Add a category' in the main menu.
+
+After doing that you are ready to track time!
 
 ## THANK YOU!!
 

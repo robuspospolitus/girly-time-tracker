@@ -9,7 +9,7 @@ import AddCategory from "./Components/AddCategory";
 function App() {
   const [page, setPage] = useState('menu');
   const [theme, setTheme] = useState('theme-light-orange');
-  const [categories, setCategories] = useState(['programming', 'fitness'])
+  const [categories, setCategories] = useState([])
 
   return (
     <div className={theme+ ' background'}>

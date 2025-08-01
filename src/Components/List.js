@@ -56,7 +56,7 @@ export default function List({ categories }) {
       <div className='select-category'>
         <div className='select'>
           <div className='select-cat-title' onClick={() => setOpen(!open)}>
-            <p className='select-subtitle'>{category ? category : 'Choose a category...'}</p>
+            <p className='select-subtitle'>{categories ? category ? category : 'Choose a category...' : 'Go back to add a category'}</p>
             <Icon path={open ? mdiMenuDown : mdiMenuLeft} color='#616161' size={1}/>
           </div>
           { open && categories.map(cat => (

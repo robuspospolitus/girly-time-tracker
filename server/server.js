@@ -13,7 +13,7 @@
 
   // Jeśli nie istnieje plik, utwórz go
   if (!fs.existsSync(dataPath)) {
-    fs.writeFileSync(dataPath, '[]', 'utf-8');
+    fs.writeFileSync(dataPath, '[{}]', 'utf-8');
   }
 
   // GET - odczytaj JSON
