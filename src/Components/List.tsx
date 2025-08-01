@@ -4,11 +4,15 @@ import '../Styles/List.scss';
 import Icon from '@mdi/react';
 import { mdiMenuDown, mdiMenuLeft } from '@mdi/js';
 
-export default function List({ categories }) {
+type propsList = {
+  categories: Array<string>
+}
+
+export default function List({ categories }:propsList) {
   const today = new Date()
   const todaysdate = String(today.getDate()).padStart(2, '0')+'/'+String(today.getMonth() + 1).padStart(2, '0')+'/'+ today.getFullYear();
   const dateid = String(today.getDate()).padStart(2, '0')+String(today.getMonth() + 1).padStart(2, '0')+ today.getFullYear()+today.getHours()+today.getMinutes()+today.getSeconds()+today.getMilliseconds();
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<{ [key: string]: Array<{id: string, date: string, hours: number}>}>({});
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [category, setCategory] = useState('');
@@ -21,7 +25,7 @@ export default function List({ categories }) {
     }).catch(err => console.error(err));;
   }, []);
 
-  const deleteItem = (id) => {
+  const deleteItem = (id:string) => {
     axios.delete(`http://localhost:5000/api/data/${category}/${id}`).then((response) => {
       setItems({...items,  [category]: response.data});
       console.log({...items, [category]: response.data});
@@ -30,7 +34,7 @@ export default function List({ categories }) {
 
   const addItem = () => {
     if(hours >= 0 && hours <=23 && minutes >= 0 && minutes <= 59) {
-        const time = parseInt(hours) + parseFloat((minutes / 60).toFixed(2));
+        const time = hours + parseFloat((minutes / 60).toFixed(2));
         axios.post(`http://localhost:5000/api/data/${category}`, { id: dateid, date: todaysdate, hours: time }).then((response) => {
           setItems({...items, [category]: response.data});
           console.log({...items, [category]: response.data});
@@ -49,14 +53,14 @@ export default function List({ categories }) {
   return (
     <>
       <div id="form">
-        <input name="hours" max={23} min={0} type="number" maxLength={2} placeholder="Hours" onChange={(e) => setHours(e.target.value)}/>
-        <input name="minutes" max={59} min={0} type="number" maxLength={2} placeholder="Minutes" onChange={(e) => setMinutes(e.target.value)}/>
+        <input name="hours" max={23} min={0} type="number" maxLength={2} placeholder="Hours" onChange={(e) => setHours(parseInt(e.target.value))}/>
+        <input name="minutes" max={59} min={0} type="number" maxLength={2} placeholder="Minutes" onChange={(e) => setMinutes(parseInt(e.target.value))}/>
         <button className="save-btn" onClick={(e) => addItem()}>Save Time</button>
       </div>
       <div className='select-category'>
         <div className='select'>
           <div className='select-cat-title' onClick={() => setOpen(!open)}>
-            <p className='select-subtitle'>{categories ? category ? category : 'Choose a category...' : 'Go back to add a category'}</p>
+            <p className='select-subtitle'>{categories.length ? category ? category : 'Choose a category...' : 'Go back to add a category'}</p>
             <Icon path={open ? mdiMenuDown : mdiMenuLeft} color='#616161' size={1}/>
           </div>
           { open && categories.map(cat => (

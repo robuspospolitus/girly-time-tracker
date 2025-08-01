@@ -1,9 +1,13 @@
 import '../Styles/Settings.scss';
 import Icon from '@mdi/react';
 import { mdiMenuLeft, mdiMenuDown } from '@mdi/js';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
-export default function Settings({setTheme}) {
+type propsSettings = {
+    setTheme: Dispatch<SetStateAction<string>>
+}
+
+export default function Settings({setTheme}: propsSettings) {
     const [open, setOpen] = useState(false);
     const themes = [ {
         light: [

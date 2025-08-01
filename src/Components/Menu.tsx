@@ -1,6 +1,11 @@
+import { Dispatch, SetStateAction } from 'react';
 import '../Styles/Menu.scss';
 
-export default function Menu({setPage}) {
+type propsMenu = {
+    setPage: Dispatch<SetStateAction<string>>
+}
+
+export default function Menu({setPage} :propsMenu) {
 
     return (
         <div className='menulist'>

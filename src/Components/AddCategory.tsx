@@ -1,27 +1,33 @@
 import axios from "axios";
 import '../Styles/AddCategory.scss';
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-export default function AddCategory({ categories, setCategories }) {
+type propsAddCategory = {
+  categories: Array<string>,
+  setCategories: Dispatch<SetStateAction<Array<string>>>
+}
+
+export default function AddCategory({ categories, setCategories }:propsAddCategory) {
     const [category, setCategory] = useState('');
 
     const addCategory = () => {
       const temp = category.toLowerCase();
       if( temp !== '' && temp !== null && !categories.includes(temp)) {
         setCategories([...categories, temp]);
+        setCategory('');
       }
     }
-    const deleteCategory = (e) => {
+    const deleteCategory = (e:string) => {
       setCategories(categories.filter((cat) => cat !== e))
     }
 
     return(
         <div className="addcategory" >
-          <div className="addcategory-input">
-            <input id="addcategory" placeholder="Name of the new category..." onChange={(e) => setCategory(e.target.value)}/>
-            <button className="save-btn addsave" onClick={() => addCategory()}>Save</button>
+          <form className="addcategory-input" onSubmit={e => e.preventDefault()}>
+            <input id="addcategory" placeholder="Name of the new category..." onChange={(e) => setCategory(e.target.value)} value={category} />
+            <button className="save-btn addsave" type="submit" onClick={() => addCategory()}>Save</button>
 
-          </div>
+          </form>
           <div className="addcategory-list">
             { categories.map(category => (
               <div className="addcategory-category" key={category}>
