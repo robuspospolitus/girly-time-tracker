@@ -44,6 +44,7 @@ input, .save-btn, #static-total {
     flex-direction: column;
     align-items: center;
     margin-bottom: 32px;
+    cursor: pointer;
     .select {
         width: 70%;
         min-height: 30px;
@@ -110,6 +111,7 @@ input, .save-btn, #static-total {
     border-radius: 10px;
     margin-left: 15px;
     align-items: center;
+    text-align: center;
 }
 .delete:hover {
     background-color: #a74e4e;

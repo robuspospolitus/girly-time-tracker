@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Icon from '@mdi/react';
 import { mdiArrowLeft } from '@mdi/js';
 import List from "./Components/List";
@@ -8,8 +8,16 @@ import AddCategory from "./Components/AddCategory";
 
 function App() {
   const [page, setPage] = useState('menu');
-  const [theme, setTheme] = useState('theme-light-orange');
-  const [categories, setCategories] = useState<Array<string>>([])
+  const [theme, setTheme] = useState( localStorage.getItem('theme') || 'theme-light-orange');
+  const [categories, setCategories] = useState<Array<string>>(JSON.parse(localStorage.getItem('categories') || '[]'))
+
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+  useEffect(() => {
+    localStorage.setItem('categories', JSON.stringify(categories));
+  }, [categories]);
+
 
   return (
     <div className={theme+ ' background'}>

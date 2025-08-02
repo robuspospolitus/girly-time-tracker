@@ -18,7 +18,7 @@ Time can be entered into specific, separate categories. This way, hours spent on
 
 ## Themes
 
-The app offers a variety of color themes, allowing you to customize it to your taste. There are both light and dark themes. Currently, the primary theme is light orange. Soon, the theme will be saved individually, so you won't have to change it every time you launch the app.
+The app offers a variety of color themes, allowing you to customize it to your taste. There are both light and dark themes. Currently, the primary theme is light orange.
 
 
 ## Future updates
