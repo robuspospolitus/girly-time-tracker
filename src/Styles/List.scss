@@ -120,7 +120,6 @@ input, .save-btn, #static-total {
 #static-total{
     width: 408px;
     height: 48px;
-    margin: 5px;
     background-color: var(--item-background);
     display: flex;
     flex-direction: row;
@@ -129,6 +128,9 @@ input, .save-btn, #static-total {
     bottom: 20px;
     text-align: center;
     padding: 8px;
+    margin: 5px 0 5px 0;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 h2 {
     width: 100%;
@@ -143,4 +145,10 @@ input::-webkit-inner-spin-button {
 }
 input[type=number] {
     appearance:textfield; /* Firefox */
+}
+
+@media only screen and (max-width: 475px) {
+    #static-total{
+        width: 350px;
+    }
 }

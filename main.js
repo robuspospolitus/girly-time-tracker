@@ -9,6 +9,8 @@ function createWindow() {
     const win = new BrowserWindow({
         width: 500,
         height: 600,
+        minWidth: 470,
+        minHeight: 400,
         icon: path.join(__dirname, 'icon.ico'),
         
     });

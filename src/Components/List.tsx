@@ -20,7 +20,6 @@ export default function List({ categories }:propsList) {
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/data").then((response) => {
-      console.log(response.data);
       setItems(response.data);
     }).catch(err => console.error(err));;
   }, []);
@@ -28,7 +27,6 @@ export default function List({ categories }:propsList) {
   const deleteItem = (id:string) => {
     axios.delete(`http://localhost:5000/api/data/${category}/${id}`).then((response) => {
       setItems({...items,  [category]: response.data});
-      console.log({...items, [category]: response.data});
     });
   };
 
@@ -37,7 +35,6 @@ export default function List({ categories }:propsList) {
         const time = hours + parseFloat((minutes / 60).toFixed(2));
         axios.post(`http://localhost:5000/api/data/${category}`, { id: dateid, date: todaysdate, hours: time }).then((response) => {
           setItems({...items, [category]: response.data});
-          console.log({...items, [category]: response.data});
         });
   }};
 

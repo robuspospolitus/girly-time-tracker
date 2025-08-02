@@ -7,6 +7,7 @@ body {
     justify-content: center;
     align-items: center;
     align-items: center;
+    overflow-x: hidden;
 }
 button {
     height: 20px;
@@ -50,9 +51,8 @@ h1 {
     background-color: var(--secondary);
     position: absolute;
     top: 24px;
-    left: 40px;
+    left: 6vw;
     border-radius: 8px;
-    
 }
 
 .gobackicon {
