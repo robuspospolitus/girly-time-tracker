@@ -6,7 +6,7 @@ This project is in development. New updates are constantly being released, intro
 
 ## Time tracking
 
-The app counts a set of hours from a given category. You can easily add or remove hours as needed. Currently, the only format available for adding hours is entering hours and minutes spent on an activity. New hour counting options will be available soon.This app gathers your time by entering specific data (hours and minutes as for now). 
+The app counts a set of hours from a given category. You can easily add or remove hours as needed. Currently, there are two formats available for adding hours. The first one is entering hours and minutes spent on the activity. The second option is to input a time period (for example from 15:30 to 19:20). New options will be available soon.
 
 ## Data storing
 
@@ -28,8 +28,6 @@ The app offers a variety of color themes, allowing you to customize it to your t
 Statistics page
 
 Timer
-
-Another way of adding time (for example: from 16:30 to 17:20 = 0,83 hours)
 
 Sounds
 

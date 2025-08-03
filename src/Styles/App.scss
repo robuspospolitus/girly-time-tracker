@@ -60,6 +60,22 @@ h1 {
     margin-top: 3px;
 }
 
+.delete {
+    background-color: #c75d5d;
+    color: white;
+    border: 0px;
+    height: 15px;
+    width: 15px;
+    font-size: 12px;
+    border-radius: 10px;
+    margin-left: 15px;
+    align-items: center;
+    text-align: center;
+}
+.delete:hover {
+    background-color: #a74e4e;
+}
+
 @keyframes background-animation {
     from {background-position: 0 0;}
     to {background-position: 150px 150px;}

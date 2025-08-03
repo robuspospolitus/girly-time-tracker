@@ -1,0 +1,24 @@
+.hth-wrapper {
+    width: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    border-left: 2px solid var(--border-input-1);
+    border-top: 2px solid var(--border-input-1);
+    border-right: 2px solid var(--border-input-2);
+    border-bottom: 2px solid var(--border-input-2);
+    border-radius: 8px;
+    margin: 5px;
+    .hth-input {
+        border: none;
+        margin: 0;
+        padding: 0;
+        width: 47.5px;
+        cursor: pointer;
+    }
+    p {
+        width: 5px;
+        cursor: default
+    }
+}

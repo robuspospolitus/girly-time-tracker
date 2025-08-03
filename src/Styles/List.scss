@@ -1,23 +1,56 @@
-#form {
+.form {
+    backdrop-filter: blur(5px);
+    border-left: 2px solid var(--border-item-1);
+    border-top: 2px solid var(--border-item-1);
+    border-right: 2px solid var(--border-item-2);
+    border-bottom: 2px solid var(--border-item-2);
+    border-radius: 10px;
+    padding: 10px 0 10px 0;
+    margin: 20px 10px 16px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    #change-input-type {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: 18px;
+        gap: 10px;
+        margin-bottom: 10px;
+        color: var(--text-primary);
+        .icon {
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+        p {
+            width: 200px;
+            text-align: center;
+        }
+    }
+}
+
+.form-change {
     display: flex;
     flex-direction: row;
     height: 50px;
     align-items: center;
     width: 340px;
     margin: auto;
+    
 }
 .save-btn {
-    width: 110px;
-    height: 24px;
-    background-color: var(--secondary);
-    font-size: 17px;
-    font-weight: 600;
-    color: var(--text-secondary);
-    margin-left: 5px;
-}
-.save-btn:hover {
-    filter: brightness(95%);
-}
+        width: 110px;
+        height: 24px;
+        background-color: var(--secondary);
+        font-size: 17px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        margin-left: 5px;
+    }
+    .save-btn:hover {
+        filter: brightness(95%);
+    }
+
 input {
     width: 100px;
     height: 20px;
@@ -43,7 +76,7 @@ input, .save-btn, #static-total {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 32px;
+    margin-bottom: 12px;
     cursor: pointer;
     .select {
         width: 70%;
@@ -87,35 +120,23 @@ input, .save-btn, #static-total {
     display: flex;
     flex-direction: row;
     align-items: center;
-}
+    .date {
+        font-size: 25px;
+        padding-left: 25px;
+        color: #616161;
+    }
 
-.date {
-    font-size: 25px;
-    padding-left: 25px;
-    color: #616161;
+   
+    
 }
-
 .hours {
     text-align: end;
     font-size: 25px;
     width: 55%;
     color: var(--hours);
 }
-.delete {
-    background-color: #c75d5d;
-    color: white;
-    border: 0px;
-    height: 15px;
-    width: 15px;
-    font-size: 12px;
-    border-radius: 10px;
-    margin-left: 15px;
-    align-items: center;
-    text-align: center;
-}
-.delete:hover {
-    background-color: #a74e4e;
-}
+
+
 
 #static-total{
     width: 408px;
