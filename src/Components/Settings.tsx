@@ -7,7 +7,7 @@ type propsSettings = {
     setTheme: Dispatch<SetStateAction<string>>
 }
 
-export default function Settings({setTheme}: propsSettings) {
+const Settings = ({setTheme}: propsSettings) => {
     const [open, setOpen] = useState(false);
     const themes = [ {
         light: [
@@ -54,3 +54,4 @@ export default function Settings({setTheme}: propsSettings) {
         </div>
     )
 }
+export default Settings;

@@ -1,13 +1,12 @@
-import axios from "axios";
-import '../Styles/AddCategory.scss';
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import '../Styles/AddCategory.scss';
 
 type propsAddCategory = {
   categories: Array<string>,
   setCategories: Dispatch<SetStateAction<Array<string>>>
 }
 
-export default function AddCategory({ categories, setCategories }:propsAddCategory) {
+const AddCategory = ({ categories, setCategories }:propsAddCategory) => {
     const [category, setCategory] = useState('');
 
     const addCategory = () => {
@@ -39,3 +38,4 @@ export default function AddCategory({ categories, setCategories }:propsAddCatego
         </div>
     )
 }
+export default AddCategory;

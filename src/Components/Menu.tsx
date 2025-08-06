@@ -5,8 +5,7 @@ type propsMenu = {
     setPage: Dispatch<SetStateAction<string>>
 }
 
-export default function Menu({setPage} :propsMenu) {
-
+const Menu = ({setPage} :propsMenu) => {
     return (
         <div className='menulist'>
             <div className='menuitem mainitem' onClick={() => setPage('list')}><p className='menuitemp mainitem'>Track time</p></div>
@@ -17,3 +16,4 @@ export default function Menu({setPage} :propsMenu) {
         </div>
     )
 }
+export default Menu;

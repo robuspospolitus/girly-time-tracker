@@ -77,7 +77,6 @@ input, .save-btn, #static-total {
     flex-direction: column;
     align-items: center;
     margin-bottom: 12px;
-    cursor: pointer;
     .select {
         width: 70%;
         min-height: 30px;
@@ -87,6 +86,7 @@ input, .save-btn, #static-total {
         border-bottom: 2px solid var(--border-input-2);
         border-radius: 8px;
         background-color: white;
+        cursor: pointer;
         .select-cat-title {
             height: 30px;
             display: flex;

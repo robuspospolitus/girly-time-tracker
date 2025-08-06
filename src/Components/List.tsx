@@ -9,7 +9,7 @@ type propsList = {
   categories: Array<string>
 }
 
-export default function List({ categories }:propsList) {
+const List = ({ categories }:propsList) => {
   const today = new Date()
   const todaysdate = String(today.getDate()).padStart(2, '0')+'/'+String(today.getMonth() + 1).padStart(2, '0')+'/'+ today.getFullYear();
   const dateid = String(today.getDate()).padStart(2, '0')+String(today.getMonth() + 1).padStart(2, '0')+ today.getFullYear()+today.getHours()+today.getMinutes()+today.getSeconds()+today.getMilliseconds();
@@ -119,7 +119,7 @@ export default function List({ categories }:propsList) {
         <div className='select-category'>
           <div className='select'>
             <div className='select-cat-title' onClick={() => setOpen(!open)}>
-              <p className='select-subtitle'>{categories.length ? category ? category : 'Choose a category...' : 'Go back to add a category'}</p>
+              <p className='select-subtitle'>{categories && categories.length ? category ? category : 'Choose a category...' : 'Go back to add a category'}</p>
               <Icon path={open ? mdiMenuDown : mdiMenuLeft} color='#616161' size={1}/>
             </div>
             { open && categories.map(cat => (
@@ -151,8 +151,7 @@ type propsHth = {
   setData: Dispatch<SetStateAction<{hour: number, minutes: number}>>
 }
 
-function HourToHour({ data, setData }: propsHth) {
-
+const HourToHour = ({ data, setData }: propsHth) => {
   return (
     <div className='hth-wrapper'>
       <input className='hth-input' min={0} max={23} maxLength={2} type='number' placeholder='00' onChange={(e) => e.target.value !== '' ? setData({hour: parseInt(e.target.value), minutes: data.minutes }) : setData({hour: 0, minutes: data.minutes })}/>
@@ -161,3 +160,5 @@ function HourToHour({ data, setData }: propsHth) {
     </div>
   )
 }
+
+export default List;
