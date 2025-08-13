@@ -33,6 +33,8 @@ Sounds
 
 New logo
 
+Notifications
+
 And more to come... (Imagination is the limit)
 
 
@@ -40,13 +42,7 @@ And more to come... (Imagination is the limit)
 
 First open the terminal in the project directory.
 
-Check if in main.js loadURL is commented. It can slip off my mind. Should look like this: 
-
-`win.loadFile(path.join(__dirname, 'build', 'index.html'));`
-
-`// win.loadURL('http://localhost:3000')`
-
-Type `npm run build` and press enter. It can take a while
+Type `npm install` and then `npm run build` and press enter. It can take a while
 
 After it's done building, go to `dist` folder.
 

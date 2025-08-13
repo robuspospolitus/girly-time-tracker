@@ -21,10 +21,12 @@
   "scripts": {
     "start": "react-scripts start",
     "build-react": "react-scripts build",
+    "bundle-react": "node esbuild.config.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "start-electron": "electron .",
-    "build": "npm run build-react && electron-builder"
+    "build": "npm run bundle-react && electron-builder",
+    "build-electron": "electron-builder"
   },
   "eslintConfig": {
     "extends": [
@@ -49,17 +51,20 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
-    "@types/react": "^19.1.9",
-    "@types/node": "^24.1.0",
+    "@types/node": "^24.2.1",
+    "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "electron": "^37.2.4",
     "electron-builder": "^26.0.12",
+    "esbuild": "^0.25.9",
+    "esbuild-plugin-sass": "^1.0.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
   "build": {
     "appId": "com.girly.timer",
     "productName": "GirlyTimeTracker",
+    "asar": true,
     "files": [
       "build/**/*",
       "main.js",
