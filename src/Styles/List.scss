@@ -62,7 +62,7 @@ input:hover {
     filter: brightness(96%);
 }
 
-input, .save-btn, #static-total {
+input, .save-btn, #static-total, .timer-btn {
     border-left: 2px solid var(--border-input-1);
     border-top: 2px solid var(--border-input-1);
     border-right: 2px solid var(--border-input-2);
@@ -70,6 +70,19 @@ input, .save-btn, #static-total {
     border-radius: 8px;
     font-family: 'Times New Roman', Times, serif;
     
+}
+.stopwatch-btn {
+    width: 160px;
+    height: 80px;
+    margin: 8px;
+    font-size: 32px;
+    border-left: 2px solid var(--border-input-1);
+    border-top: 2px solid var(--border-input-1);
+    border-right: 2px solid var(--border-input-2);
+    border-bottom: 2px solid var(--border-input-2);
+    background-color: var(--secondary);
+    color: var(--text-secondary);
+    border-radius: 100px;
 }
 .select-category{
     width: 100%;

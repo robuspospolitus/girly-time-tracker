@@ -1,4 +1,4 @@
-import { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction, useRef } from 'react';
 import axios from "axios";
 import '../Styles/List.scss';
 import '../Styles/HourToHour.scss'
@@ -21,6 +21,9 @@ const List = ({ categories }:propsList) => {
   const [hthTo, setHthTo] = useState({hour: 0, minutes: 0})
   const [category, setCategory] = useState('');
   const [open, setOpen] = useState(false);
+  const [stopwatch, setStopwatch] = useState(0)
+  const [isRunning, setIsRunning] = useState(false);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/data").then((response) => {
@@ -39,11 +42,11 @@ const List = ({ categories }:propsList) => {
 
     if (inputType === 'hours & minutes') {
       if(hmin.hour >= 0 && hmin.hour <=23 && hmin.minutes >= 0 && hmin.minutes <= 59 && category !== '') {
-          const time = hmin.hour + parseFloat((hmin.minutes / 60).toFixed(2));
-          if (time === 0) return;
-          axios.post(`http://localhost:5000/api/data/${category}`, { id: dateid, date: todaysdate, hours: time }).then((response) => {
-            setItems({...items, [category]: response.data});
-          });
+        const time = hmin.hour + parseFloat((hmin.minutes / 60).toFixed(2));
+        if (time === 0) return;
+        axios.post(`http://localhost:5000/api/data/${category}`, { id: dateid, date: todaysdate, hours: time }).then((response) => {
+          setItems({...items, [category]: response.data});
+        });
       }
     }
     else if (inputType === 'time to time') {
@@ -67,7 +70,15 @@ const List = ({ categories }:propsList) => {
             setItems({...items, [category]: response.data});
           });
       } 
-      
+    }
+    else if (inputType === 'stopwatch') {
+      if(category !== '') {
+        const time = parseFloat((stopwatch / 3600).toFixed(2));
+        if (time === 0) return;
+        axios.post(`http://localhost:5000/api/data/${category}`, { id: dateid, date: todaysdate, hours: time }).then((response) => {
+          setItems({...items, [category]: response.data});
+        });
+      }
     }
   };
 
@@ -81,7 +92,7 @@ const List = ({ categories }:propsList) => {
   }
 
   const handleInputChange = (e:string) => {
-    const inputTypes = ['hours & minutes', 'time to time']
+    const inputTypes = ['hours & minutes', 'time to time', 'stopwatch']
     if(e === 'prev'){
       if (inputTypes.indexOf(inputType) === 0) setInputType(inputTypes[inputTypes.length - 1]);
       else setInputType(inputTypes[inputTypes.indexOf(inputType) - 1])
@@ -91,6 +102,47 @@ const List = ({ categories }:propsList) => {
       else setInputType(inputTypes[inputTypes.indexOf(inputType) + 1])
     }
   }
+
+  const handlestopwatch = () => {
+    setIsRunning(prev => {
+      if (!prev && category) {
+        intervalRef.current = setInterval(() => {
+          setStopwatch(t => t + 1);
+        }, 1000);
+      } else {
+        if(intervalRef.current !== null) clearInterval(intervalRef.current);
+        addItem();
+        setStopwatch(0);
+      }
+      
+      return !prev;
+    });
+  }
+
+  const stopwatchformat = () => {
+    let minutes = stopwatch.toString();
+    let seconds = stopwatch.toString();
+    const hours = stopwatch / 3600 > 0 ? 
+      stopwatch / 3600 > 9 ? 
+      `${parseInt((stopwatch/3600).toString())}` :
+      `0${parseInt((stopwatch/3600).toString())}` : 
+      '00';
+    while(parseInt(minutes) >= 3600) minutes = (parseInt(minutes) - 3600).toString();
+    minutes = parseInt(minutes) / 60 > 0 ? 
+      parseInt(minutes) / 60 > 9 ?  
+      `${parseInt((parseInt(minutes)/60).toString())}` :
+      `0${parseInt((parseInt(minutes)/60).toString())}` : 
+      '00';
+    while(parseInt(seconds) >= 60) seconds = (parseInt(seconds) - 60).toString();
+    seconds = parseInt(seconds) > 0 ? 
+      parseInt(seconds) > 9 ?  
+      `${parseInt((parseInt(seconds)).toString())}` :
+      `0${parseInt((parseInt(seconds)).toString())}` : 
+      '00';
+    const format = hours + ':' + minutes + ':' + seconds;
+    return format
+  }
+
 
   return (
     <>
@@ -113,6 +165,12 @@ const List = ({ categories }:propsList) => {
             <HourToHour data={hthFrom} setData={setHthFrom}/>
             <HourToHour data={hthTo} setData={setHthTo}/>
             <button type='submit' className="save-btn" >Save Time</button>
+          </form>
+        }
+        { inputType === 'stopwatch' &&
+          <form style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}} onSubmit={(e) => {e.preventDefault();}}>
+            <button onClick={() => handlestopwatch()} className="stopwatch-btn" >{stopwatchformat()}</button>
+            <p style={{color: 'red', margin: '4px', fontSize: '12px', textAlign: 'center', width: '80%'}}>Disclaimer: the current format does not support minutes, if the time divided by 3600 is a number less than one thousandth of an hour, it will not be saved</p>
           </form>
         }
         

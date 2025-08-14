@@ -33,7 +33,7 @@ function createTray() {
     const { nativeImage, Tray, Menu } = require('electron');
     const icon = path.join(__dirname, 'build', 'favicon.ico')
     const trayicon = nativeImage.createFromPath(icon)
-    tray = new Tray(trayicon.resize({ width: 16 }))
+    tray = new Tray(trayicon)
     const contextMenu = Menu.buildFromTemplate([
         {
             label: 'Show App',
