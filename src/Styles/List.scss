@@ -6,10 +6,11 @@
     border-bottom: 2px solid var(--border-item-2);
     border-radius: 10px;
     padding: 10px 0 10px 0;
-    margin: 20px 10px 16px 10px;
+    margin: 20px auto 16px auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 428px;
     #change-input-type {
         display: flex;
         flex-direction: row;
@@ -190,3 +191,9 @@ input[type=number] {
         width: 350px;
     }
 }
+@media only screen and (max-width: 500px) {
+    .form {
+        margin: 20px 10px 16px 10px;
+    }
+}
+

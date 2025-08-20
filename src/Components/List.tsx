@@ -170,7 +170,7 @@ const List = ({ categories }:propsList) => {
         { inputType === 'stopwatch' &&
           <form style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}} onSubmit={(e) => {e.preventDefault();}}>
             <button onClick={() => handlestopwatch()} className="stopwatch-btn" >{stopwatchformat()}</button>
-            <p style={{color: 'red', margin: '4px', fontSize: '12px', textAlign: 'center', width: '80%'}}>Disclaimer: the current format does not support minutes, if the time divided by 3600 is a number less than one thousandth of an hour, it will not be saved</p>
+            <p style={{color: 'red', margin: '4px', fontSize: '12px', textAlign: 'center', width: '80%'}}>Disclaimer: the current format does not support seconds, if the time divided by 3600 is a number less than one thousandth of an hour, it will not be saved</p>
           </form>
         }
         
