@@ -23,6 +23,10 @@ const List = ({ categories }:propsList) => {
   const [open, setOpen] = useState(false);
   const [stopwatch, setStopwatch] = useState(0)
   const [isRunning, setIsRunning] = useState(false);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [timerHth, setTimerHth] = useState({hour: 0, minutes: 0});
+  const [timer, setTimer] = useState(0);
+
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
@@ -37,7 +41,7 @@ const List = ({ categories }:propsList) => {
     });
   };
 
-  const addItem = () => {
+  const addItem = (timer?:number) => {
     let ttt = 0;
 
     if (inputType === 'hours & minutes') {
@@ -80,6 +84,15 @@ const List = ({ categories }:propsList) => {
         });
       }
     }
+    else if (inputType === 'timer') {
+      if(timer) {
+        const time = parseFloat((timer / 3600).toFixed(2));
+        if (time === 0) return;
+        axios.post(`http://localhost:5000/api/data/${category}`, { id: dateid, date: todaysdate, hours: time }).then((response) => {
+          setItems({...items, [category]: response.data});
+        });
+      }
+    }
   };
 
   const handleTime = () => {
@@ -92,7 +105,7 @@ const List = ({ categories }:propsList) => {
   }
 
   const handleInputChange = (e:string) => {
-    const inputTypes = ['hours & minutes', 'time to time', 'stopwatch']
+    const inputTypes = ['hours & minutes', 'time to time', 'stopwatch', 'timer']
     if(e === 'prev'){
       if (inputTypes.indexOf(inputType) === 0) setInputType(inputTypes[inputTypes.length - 1]);
       else setInputType(inputTypes[inputTypes.indexOf(inputType) - 1])
@@ -119,13 +132,13 @@ const List = ({ categories }:propsList) => {
     });
   }
 
-  const stopwatchformat = () => {
-    let minutes = stopwatch.toString();
-    let seconds = stopwatch.toString();
-    const hours = stopwatch / 3600 > 0 ? 
-      stopwatch / 3600 > 9 ? 
-      `${parseInt((stopwatch/3600).toString())}` :
-      `0${parseInt((stopwatch/3600).toString())}` : 
+  const stopwatchformat = (num:number) => {
+    let minutes = num.toString();
+    let seconds = num.toString();
+    const hours = num / 3600 > 0 ? 
+      num / 3600 > 9 ? 
+      `${parseInt((num/3600).toString())}` :
+      `0${parseInt((num/3600).toString())}` : 
       '00';
     while(parseInt(minutes) >= 3600) minutes = (parseInt(minutes) - 3600).toString();
     minutes = parseInt(minutes) / 60 > 0 ? 
@@ -143,6 +156,44 @@ const List = ({ categories }:propsList) => {
     return format
   }
 
+  const handleTimer = () => {
+    const hours = timerHth.hour > 0 ? 
+      timerHth.hour < 24 ?
+        timerHth.hour * 3600
+      : 0 : 0;
+    const minutes = timerHth.minutes > 0 ? 
+      timerHth.minutes < 60 ?
+        timerHth.minutes * 60
+      : 0 : 0;
+    const time = hours + minutes
+    setTimer(time)
+  }
+  
+  const handleResetTimer = () => {
+    setTimer(0)
+  }
+  const handleStopTimer = () => {
+     setIsTimerRunning(prev => {
+      if (!prev && category) {
+        let i = timer;
+        intervalRef.current = setInterval(() => {
+          setTimer(t => {
+            i = t-1;
+            return t - 1
+          });
+          if(i <= 0) {
+            addItem(timer);
+            if(intervalRef.current !== null) clearInterval(intervalRef.current);
+            setIsTimerRunning(false);
+          }
+        }, 1000);
+        return !prev;
+      } else {
+        if(intervalRef.current !== null) clearInterval(intervalRef.current);
+      }
+      return !prev;
+    });
+  }
 
   return (
     <>
@@ -157,20 +208,31 @@ const List = ({ categories }:propsList) => {
           <form className="form-change" onSubmit={(e) => {e.preventDefault(); addItem()}}>
             <input name="hours" max={23} min={0} type="number" maxLength={2} placeholder="Hours" onChange={(e) => setHmin({...hmin, hour: parseInt(e.target.value)}) }/>
             <input name="minutes" max={59} min={0} type="number" maxLength={2} placeholder="Minutes" onChange={(e) => setHmin({...hmin, minutes: parseInt(e.target.value)}) }/>
-            <button type='submit' className="save-btn">Save Time</button>
+            <button name='submit' type='submit' className="save-btn">Save Time</button>
           </form>
         }
         { inputType === 'time to time' &&
           <form className='form-change' onSubmit={(e) => {e.preventDefault(); addItem()}}>
             <HourToHour data={hthFrom} setData={setHthFrom}/>
             <HourToHour data={hthTo} setData={setHthTo}/>
-            <button type='submit' className="save-btn" >Save Time</button>
+            <button name='submit' type='submit' className="save-btn" >Save Time</button>
           </form>
         }
         { inputType === 'stopwatch' &&
           <form style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}} onSubmit={(e) => {e.preventDefault();}}>
-            <button onClick={() => handlestopwatch()} className="stopwatch-btn" >{stopwatchformat()}</button>
-            <p style={{color: 'red', margin: '4px', fontSize: '12px', textAlign: 'center', width: '80%'}}>Disclaimer: the current format does not support seconds, if the time divided by 3600 is a number less than one thousandth of an hour, it will not be saved</p>
+            <button name='stopwatch' onClick={() => handlestopwatch()} className="stopwatch-btn" >{stopwatchformat(stopwatch)}</button>
+            <p id='disclaimer' style={{color: 'red', margin: '4px', fontSize: '12px', textAlign: 'center', width: '80%'}}>Disclaimer: the current format does not support seconds, if the time divided by 3600 is a number less than one thousandth of an hour, it will not be saved</p>
+          </form>
+        }
+        { inputType === 'timer' &&
+          <form style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}} onSubmit={(e) => {e.preventDefault();}}>
+            <p style={{marginTop: '8px', letterSpacing: '1.8px'}}>Hours and minutes</p>
+            <HourToHour setTimer={setTimer} classname='timer-hth' data={timerHth} setData={setTimerHth}/>
+            <button onClick={() => handleTimer()} className="stopwatch-btn timer" style={{borderRadius: '8px'}}>{stopwatchformat(timer)}</button>
+            <div className='timer-settings'>
+              <button onClick={() => handleResetTimer()} className="timer-setting" >reset</button>
+              <button onClick={() => handleStopTimer()} className="timer-setting default" >{isTimerRunning ? 'stop' : 'start'}</button>
+            </div>
           </form>
         }
         
@@ -205,16 +267,46 @@ const List = ({ categories }:propsList) => {
 }
 
 type propsHth = {
+  classname?: string,
+  setTimer?: Dispatch<SetStateAction<number>>,
   data: {hour: number, minutes: number},
   setData: Dispatch<SetStateAction<{hour: number, minutes: number}>>
 }
 
-const HourToHour = ({ data, setData }: propsHth) => {
+const HourToHour = ({ classname='', setTimer, data, setData }: propsHth) => {
+  const handleChangeTimer = (num:number, type:string) => {
+    if (setTimer) {
+      if(type === 'hour'){
+        const hours = num > 0 ? 
+          num < 24 ?
+            num * 3600
+          : 0 : 0;
+        const minutes = data.minutes > 0 ? 
+          data.minutes < 60 ?
+            data.minutes * 60
+          : 0 : 0;
+        const time = hours + minutes
+        setTimer(time)
+      } else if (type === 'minutes') {
+        const hours = data.hour > 0 ? 
+          data.hour < 24 ?
+            data.hour * 3600
+          : 0 : 0;
+        const minutes = num > 0 ? 
+          num < 60 ?
+            num * 60
+          : 0 : 0;
+        const time = hours + minutes
+        setTimer(time)
+      }
+      
+    }
+  }
   return (
-    <div className='hth-wrapper'>
-      <input className='hth-input' min={0} max={23} maxLength={2} type='number' placeholder='00' onChange={(e) => e.target.value !== '' ? setData({hour: parseInt(e.target.value), minutes: data.minutes }) : setData({hour: 0, minutes: data.minutes })}/>
-      <p>:</p>
-      <input className='hth-input' min={0} max={59} maxLength={2} type='number' placeholder='00' onChange={(e) => e.target.value !== '' ? setData({hour: data.hour, minutes: parseInt(e.target.value) }) : setData({hour: data.hour, minutes: 0 })}/>
+    <div className={`hth-wrapper ${classname}`} >
+      <input name='hth' className='hth-input' min={0} max={23} maxLength={2} type='number' placeholder='00' onChange={(e) => {e.target.value !== '' ? setData({hour: parseInt(e.target.value), minutes: data.minutes }) : setData({hour: 0, minutes: data.minutes }); handleChangeTimer(parseInt(e.target.value), 'hour') }}/>
+      <p id='hth'>:</p>
+      <input name='hth' className='hth-input' min={0} max={59} maxLength={2} type='number' placeholder='00' onChange={(e) => {e.target.value !== '' ? setData({hour: data.hour, minutes: parseInt(e.target.value) }) : setData({hour: data.hour, minutes: 0 }); handleChangeTimer(parseInt(e.target.value), 'minutes') }}/>
     </div>
   )
 }

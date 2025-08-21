@@ -17,10 +17,10 @@ const Settings = ({setTheme}: propsSettings) => {
             {id: 'theme-light-mono', name: 'Light Mono'}
         ],
         dark: [
+            {id: 'theme-dark-pink', name: 'Dark Pink'},
+            {id: 'theme-dark-blue', name: 'Dark Blue'},
             {id: 'theme-dark-brown', name: 'Dark Brown'},
             {id: 'theme-dark-mono', name: 'Dark Mono'},
-            {id: 'theme-dark-pink', name: 'Dark Pink'},
-            {id: 'theme-dark-blue', name: 'Dark Blue'}
         ]
     }]
     return (
