@@ -1,13 +1,9 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useCategoryContext, useCategoriesContext } from "./Utensils/CategoryContext";
 import '../Styles/AddCategory.scss';
 
-type propsAddCategory = {
-  categories: Array<string>,
-  setCategories: Dispatch<SetStateAction<Array<string>>>
-}
-
-const AddCategory = ({ categories, setCategories }:propsAddCategory) => {
-    const [category, setCategory] = useState('');
+const AddCategory = () => {
+    const [category, setCategory] = useCategoryContext();
+    const [categories, setCategories] = useCategoriesContext();
 
     const addCategory = () => {
       const temp = category.toLowerCase();

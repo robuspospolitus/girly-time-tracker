@@ -1,98 +1,42 @@
-import { useState, useEffect, Dispatch, SetStateAction, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import axios from "axios";
-import '../Styles/List.scss';
-import '../Styles/HourToHour.scss'
 import Icon from '@mdi/react';
-import { mdiMenuDown, mdiMenuLeft, mdiChevronLeft, mdiChevronRight } from '@mdi/js';
+import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
+import { CategoriesProvider, useCategoryContext } from './Utensils/CategoryContext';
+import HoursAndMinutes from './List/InputType/HoursAndMinutes';
+import TimeToTime from './List/InputType/TimeToTime';
+import Stopwatch from './List/InputType/Stopwatch';
+import Timer from './List/InputType/Timer';
+import SelectCategory from './List/SelectCategory';
+import '../Styles/HourToHour.scss'
+import '../Styles/List.scss';
 
-type propsList = {
-  categories: Array<string>
-}
-
-const List = ({ categories }:propsList) => {
-  const today = new Date()
-  const todaysdate = String(today.getDate()).padStart(2, '0')+'/'+String(today.getMonth() + 1).padStart(2, '0')+'/'+ today.getFullYear();
-  const dateid = String(today.getDate()).padStart(2, '0')+String(today.getMonth() + 1).padStart(2, '0')+ today.getFullYear()+today.getHours()+today.getMinutes()+today.getSeconds()+today.getMilliseconds();
+const List = () => {
   const [items, setItems] = useState<{ [key: string]: Array<{id: string, date: string, hours: number}>}>({});
   const [inputType, setInputType] = useState('hours & minutes');
+  const [category] = useCategoryContext();
   
-  const [hmin, setHmin] = useState({hour: 0, minutes: 0});
-  const [hthFrom, setHthFrom] = useState({hour: 0, minutes: 0})
-  const [hthTo, setHthTo] = useState({hour: 0, minutes: 0})
-  const [category, setCategory] = useState('');
-  const [open, setOpen] = useState(false);
-  const [stopwatch, setStopwatch] = useState(0)
-  const [isRunning, setIsRunning] = useState(false);
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
-  const [timerHth, setTimerHth] = useState({hour: 0, minutes: 0});
-  const [timer, setTimer] = useState(0);
-
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
   useEffect(() => {
     axios.get("http://localhost:5000/api/data").then((response) => {
       setItems(response.data);
-    }).catch(err => console.error(err));;
+    }).catch((err) => {throw new Error(`Getting data from the server has failed: ${err}`)});
   }, []);
 
   const deleteItem = (id:string) => {
     axios.delete(`http://localhost:5000/api/data/${category}/${id}`).then((response) => {
       setItems({...items,  [category]: response.data});
-    });
+    }).catch((err) => {throw new Error(`Deleting an existing item has failed: ${err}`)});
   };
 
-  const addItem = (timer?:number) => {
-    let ttt = 0;
-
-    if (inputType === 'hours & minutes') {
-      if(hmin.hour >= 0 && hmin.hour <=23 && hmin.minutes >= 0 && hmin.minutes <= 59 && category !== '') {
-        const time = hmin.hour + parseFloat((hmin.minutes / 60).toFixed(2));
-        if (time === 0) return;
-        axios.post(`http://localhost:5000/api/data/${category}`, { id: dateid, date: todaysdate, hours: time }).then((response) => {
-          setItems({...items, [category]: response.data});
-        });
-      }
-    }
-    else if (inputType === 'time to time') {
-      if(hthFrom.hour >= 0 && hthFrom.hour <=23 && hthFrom.minutes >= 0 && hthFrom.minutes <= 59 && hthTo.hour >= 0 && hthTo.hour <= 23 && hthTo.minutes >= 0 && hthTo.minutes <= 59){
-        if(hthFrom.hour < hthTo.hour) {
-          if(hthFrom.minutes < hthTo.minutes) ttt = hthTo.hour - hthFrom.hour + parseFloat(((hthTo.minutes-hthFrom.minutes)/60).toFixed(2));
-          else ttt = hthTo.hour - hthFrom.hour-1 + parseFloat(((60-(hthFrom.minutes-hthTo.minutes))/60).toFixed(2));
-        }
-        else if (hthFrom.hour === hthTo.hour) {
-          if (hthFrom.minutes < hthTo.minutes) ttt = parseFloat(((hthTo.minutes-hthFrom.minutes)/60).toFixed(2));
-          else if (hthFrom.minutes === hthTo.minutes) ttt = 0;
-          else ttt = hthFrom.hour + hthTo.hour - parseFloat(((hthFrom.minutes-hthTo.minutes)/60).toFixed(2));
-        }
-        else {
-          if (hthFrom.minutes <= hthTo.minutes) ttt = 24 - hthFrom.hour + hthTo.hour + parseFloat(((hthTo.minutes-hthFrom.minutes)/60).toFixed(2));
-          else ttt = 24 - hthFrom.hour + hthTo.hour - parseFloat(((hthFrom.minutes-hthTo.minutes)/60).toFixed(2));
-        }
-        ttt = parseFloat(ttt.toFixed(2));
-        if (ttt === 0) return;
-        axios.post(`http://localhost:5000/api/data/${category}`, { id: dateid, date: todaysdate, hours: ttt }).then((response) => {
-            setItems({...items, [category]: response.data});
-          });
-      } 
-    }
-    else if (inputType === 'stopwatch') {
-      if(category !== '') {
-        const time = parseFloat((stopwatch / 3600).toFixed(2));
-        if (time === 0) return;
-        axios.post(`http://localhost:5000/api/data/${category}`, { id: dateid, date: todaysdate, hours: time }).then((response) => {
-          setItems({...items, [category]: response.data});
-        });
-      }
-    }
-    else if (inputType === 'timer') {
-      if(timer) {
-        const time = parseFloat((timer / 3600).toFixed(2));
-        if (time === 0) return;
-        axios.post(`http://localhost:5000/api/data/${category}`, { id: dateid, date: todaysdate, hours: time }).then((response) => {
-          setItems({...items, [category]: response.data});
-        });
-      }
-    }
+  const addItem = (time: number) => {
+    if(inputType && time) {
+      const today = new Date()
+      const todaysdate = String(today.getDate()).padStart(2, '0')+'/'+String(today.getMonth() + 1).padStart(2, '0')+'/'+ today.getFullYear();
+      const dateid = String(today.getDate()).padStart(2, '0')+String(today.getMonth() + 1).padStart(2, '0')+ today.getFullYear()+today.getHours()+today.getMinutes()+today.getSeconds()+today.getMilliseconds();
+      axios.post(`http://localhost:5000/api/data/${category}`, { id: dateid, date: todaysdate, hours: time }).then((response) => {
+        setItems({...items, [category]: response.data});
+      }).catch((err) => {throw new Error(`Adding new item has failed: ${err}`)});
+    } else throw new Error('The function addItem() was called with undefined time value or inputType(which should be impossible)');
   };
 
   const handleTime = () => {
@@ -114,22 +58,6 @@ const List = ({ categories }:propsList) => {
       if (inputTypes.indexOf(inputType) === inputTypes.length-1) setInputType(inputTypes[0]);
       else setInputType(inputTypes[inputTypes.indexOf(inputType) + 1])
     }
-  }
-
-  const handlestopwatch = () => {
-    setIsRunning(prev => {
-      if (!prev && category) {
-        intervalRef.current = setInterval(() => {
-          setStopwatch(t => t + 1);
-        }, 1000);
-      } else {
-        if(intervalRef.current !== null) clearInterval(intervalRef.current);
-        addItem();
-        setStopwatch(0);
-      }
-      
-      return !prev;
-    });
   }
 
   const stopwatchformat = (num:number) => {
@@ -156,158 +84,37 @@ const List = ({ categories }:propsList) => {
     return format
   }
 
-  const handleTimer = () => {
-    const hours = timerHth.hour > 0 ? 
-      timerHth.hour < 24 ?
-        timerHth.hour * 3600
-      : 0 : 0;
-    const minutes = timerHth.minutes > 0 ? 
-      timerHth.minutes < 60 ?
-        timerHth.minutes * 60
-      : 0 : 0;
-    const time = hours + minutes
-    setTimer(time)
-  }
-  
-  const handleResetTimer = () => {
-    setTimer(0)
-  }
-  const handleStopTimer = () => {
-     setIsTimerRunning(prev => {
-      if (!prev && category) {
-        let i = timer;
-        intervalRef.current = setInterval(() => {
-          setTimer(t => {
-            i = t-1;
-            return t - 1
-          });
-          if(i <= 0) {
-            addItem(timer);
-            if(intervalRef.current !== null) clearInterval(intervalRef.current);
-            setIsTimerRunning(false);
-          }
-        }, 1000);
-        return !prev;
-      } else {
-        if(intervalRef.current !== null) clearInterval(intervalRef.current);
-      }
-      return !prev;
-    });
-  }
-
   return (
     <>
-      <div className='form'>
-        <div id='change-input-type'>
-          <div onClick={()=> handleInputChange('prev')}><Icon size={1} path={mdiChevronLeft} className='icon'/></div>
-          <p>{inputType}</p>
-          <div onClick={() => handleInputChange('next')}><Icon size={1} path={mdiChevronRight} className='icon'/></div>
+        <div className='form'>
+          <div id='change-input-type'>
+            <div onClick={()=> handleInputChange('prev')}><Icon size={1} path={mdiChevronLeft} className='icon'/></div>
+            <p>{inputType}</p>
+            <div onClick={() => handleInputChange('next')}><Icon size={1} path={mdiChevronRight} className='icon'/></div>
+          </div>
+
+          { inputType === 'hours & minutes' && <HoursAndMinutes addItem={addItem} /> }
+          { inputType === 'time to time' && <TimeToTime addItem={addItem} /> }
+          { inputType === 'stopwatch' && <Stopwatch addItem={addItem} format={stopwatchformat}/> }
+          { inputType === 'timer' && <Timer addItem={addItem} format={stopwatchformat}/> }
+          <CategoriesProvider>
+            <SelectCategory/>
+          </CategoriesProvider>
 
         </div>
-        { inputType === 'hours & minutes' &&
-          <form className="form-change" onSubmit={(e) => {e.preventDefault(); addItem()}}>
-            <input name="hours" max={23} min={0} type="number" maxLength={2} placeholder="Hours" onChange={(e) => setHmin({...hmin, hour: parseInt(e.target.value)}) }/>
-            <input name="minutes" max={59} min={0} type="number" maxLength={2} placeholder="Minutes" onChange={(e) => setHmin({...hmin, minutes: parseInt(e.target.value)}) }/>
-            <button name='submit' type='submit' className="save-btn">Save Time</button>
-          </form>
-        }
-        { inputType === 'time to time' &&
-          <form className='form-change' onSubmit={(e) => {e.preventDefault(); addItem()}}>
-            <HourToHour data={hthFrom} setData={setHthFrom}/>
-            <HourToHour data={hthTo} setData={setHthTo}/>
-            <button name='submit' type='submit' className="save-btn" >Save Time</button>
-          </form>
-        }
-        { inputType === 'stopwatch' &&
-          <form style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}} onSubmit={(e) => {e.preventDefault();}}>
-            <button name='stopwatch' onClick={() => handlestopwatch()} className="stopwatch-btn" >{stopwatchformat(stopwatch)}</button>
-            <p id='disclaimer' style={{color: 'red', margin: '4px', fontSize: '12px', textAlign: 'center', width: '80%'}}>Disclaimer: the current format does not support seconds, if the time divided by 3600 is a number less than one thousandth of an hour, it will not be saved</p>
-          </form>
-        }
-        { inputType === 'timer' &&
-          <form style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}} onSubmit={(e) => {e.preventDefault();}}>
-            <p style={{marginTop: '8px', letterSpacing: '1.8px'}}>Hours and minutes</p>
-            <HourToHour setTimer={setTimer} classname='timer-hth' data={timerHth} setData={setTimerHth}/>
-            <button onClick={() => handleTimer()} className="stopwatch-btn timer" style={{borderRadius: '8px'}}>{stopwatchformat(timer)}</button>
-            <div className='timer-settings'>
-              <button onClick={() => handleResetTimer()} className="timer-setting" >reset</button>
-              <button onClick={() => handleStopTimer()} className="timer-setting default" >{isTimerRunning ? 'stop' : 'start'}</button>
+        <div className="list">
+          { Array.isArray(items[category]) && items[category].map((item) => (
+            <div className="item" key={item.id}>
+              <div className="date">{item.date}</div>
+              <div className="hours">{item.hours} hours</div>
+              <button className="delete" onClick={() => deleteItem(item.id)}>x</button>
             </div>
-          </form>
-        }
-        
-        <div className='select-category'>
-          <div className='select'>
-            <div className='select-cat-title' onClick={() => setOpen(!open)}>
-              <p className='select-subtitle'>{categories && categories.length ? category ? category : 'Choose a category...' : 'Go back to add a category'}</p>
-              <Icon path={open ? mdiMenuDown : mdiMenuLeft} color='#616161' size={1}/>
-            </div>
-            { open && categories.map(cat => (
-              <div className='select-cat-title' key={cat} onClick={() => {setCategory(cat); setOpen(false)}}>
-                <p className='select-subtitle' style={{marginLeft: '12px'}}>{cat}</p>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
-      </div>
-      <div className="list">
-        { Array.isArray(items[category]) && items[category].map((item) => (
-          <div className="item" key={item.id}>
-            <div className="date">{item.date}</div>
-            <div className="hours">{item.hours} hours</div>
-            <button className="delete" onClick={() => deleteItem(item.id)}>x</button>
-          </div>
-        ))}
-      </div>
-      <div id="static-total">
-        <h2>{category ? `You spent ${handleTime()} hours of doing ${category} in total ${":>"}` : 'Choose a category to see your progress'}</h2>
-      </div>
+        <div id="static-total">
+          <h2>{category ? `You spent ${handleTime()} hours of doing ${category} in total ${":>"}` : 'Choose a category to see your progress'}</h2>
+        </div>
     </>
-  )
-}
-
-type propsHth = {
-  classname?: string,
-  setTimer?: Dispatch<SetStateAction<number>>,
-  data: {hour: number, minutes: number},
-  setData: Dispatch<SetStateAction<{hour: number, minutes: number}>>
-}
-
-const HourToHour = ({ classname='', setTimer, data, setData }: propsHth) => {
-  const handleChangeTimer = (num:number, type:string) => {
-    if (setTimer) {
-      if(type === 'hour'){
-        const hours = num > 0 ? 
-          num < 24 ?
-            num * 3600
-          : 0 : 0;
-        const minutes = data.minutes > 0 ? 
-          data.minutes < 60 ?
-            data.minutes * 60
-          : 0 : 0;
-        const time = hours + minutes
-        setTimer(time)
-      } else if (type === 'minutes') {
-        const hours = data.hour > 0 ? 
-          data.hour < 24 ?
-            data.hour * 3600
-          : 0 : 0;
-        const minutes = num > 0 ? 
-          num < 60 ?
-            num * 60
-          : 0 : 0;
-        const time = hours + minutes
-        setTimer(time)
-      }
-      
-    }
-  }
-  return (
-    <div className={`hth-wrapper ${classname}`} >
-      <input name='hth' className='hth-input' min={0} max={23} maxLength={2} type='number' placeholder='00' onChange={(e) => {e.target.value !== '' ? setData({hour: parseInt(e.target.value), minutes: data.minutes }) : setData({hour: 0, minutes: data.minutes }); handleChangeTimer(parseInt(e.target.value), 'hour') }}/>
-      <p id='hth'>:</p>
-      <input name='hth' className='hth-input' min={0} max={59} maxLength={2} type='number' placeholder='00' onChange={(e) => {e.target.value !== '' ? setData({hour: data.hour, minutes: parseInt(e.target.value) }) : setData({hour: data.hour, minutes: 0 }); handleChangeTimer(parseInt(e.target.value), 'minutes') }}/>
-    </div>
   )
 }
 
