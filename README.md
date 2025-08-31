@@ -1,6 +1,7 @@
 # Girly time tracker
 
-Girly Time Tracker is a simple and fun app for collecting and tracking time spent on specific activities. Recommended for everyday use, especially for activities like training, work, or hobbies. A pleasant alternative for those who don't use spreadsheets or are encouraged by the app's design.
+Girly Time Tracker is a simple and fun app for collecting an
+d tracking time spent on specific activities. Recommended for everyday use, especially for activities like training, work, or hobbies. A pleasant alternative for those who don't use spreadsheets or are encouraged by the app's design.
 
 This project is in development. New updates are constantly being released, introducing new content and improvements.
 
@@ -12,9 +13,9 @@ The first one is entering specific hours and minutes spent on the activity.
 
 The second option is to input a time period (for example from 15:30 to 19:20).
 
-The third option is to use a stopwatch. Just leave the app open while you do your stuff.
+The third option is to use a stopwatch. Just leave the app open while you do your stuff and press stop when you finish.
 
-New options will be available soon.
+The fourth option is timer. Similar concept to stopwatch except you decide how much time you want to spend on an activity at the beginning and you don't have to manually stop for it to end.
 
 ## Data storing
 
@@ -26,7 +27,7 @@ Time can be entered into specific, separate categories. This way, hours spent on
 
 ## Themes
 
-The app offers a variety of color themes, allowing you to customize it to your taste. There are both light and dark themes. Currently, the primary theme is light orange.
+The app offers a variety of color themes, allowing you to customize it to your taste. There are both light and dark themes. Currently, the primary theme is light orange. The application stores your chosen theme so it can launch the app with your chosen theme already set
 
 
 ## Future updates
@@ -36,8 +37,6 @@ The app offers a variety of color themes, allowing you to customize it to your t
 Change time format 
 
 Statistics page
-
-Timer
 
 Sounds
 
