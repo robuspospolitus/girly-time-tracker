@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { CategoryProvider, CategoriesProvider } from "./Components/Utensils/CategoryContext";
 import Icon from '@mdi/react';
 
@@ -6,7 +6,7 @@ const App = () => {
   const [page, setPage] = useState('menu');
   const [theme, setTheme] = useState( localStorage.getItem('theme') || 'theme-light-orange');
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     localStorage.setItem('theme', theme);
   }, [theme]);
   
