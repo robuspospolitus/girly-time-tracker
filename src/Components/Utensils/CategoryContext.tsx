@@ -1,9 +1,12 @@
 import { createContext, useContext, useState, useEffect, Dispatch, SetStateAction } from "react";
 
 type CategoryContextType = [string, Dispatch<SetStateAction<string>>];
-type CategoriesContextType = [string[], Dispatch<SetStateAction<string[]>>];
 const Category = createContext<CategoryContextType|null>(null);
+Category.displayName = 'Category';
+
+type CategoriesContextType = [string[], Dispatch<SetStateAction<string[]>>];
 const Categories = createContext<CategoriesContextType|null>(null);
+Categories.displayName = 'Categories';
 
 export const CategoryProvider = (props:any) => {
   const [category, setCategory] = useState('');

@@ -1,10 +1,11 @@
 import { useState, useRef } from "react";
-import HourToHour from "../HourToHour";
 import { useCategoryContext } from "../../Utensils/CategoryContext";
+import HourToHour from "../HourToHour";
+import TimeFormat from "../TimeFormat";
 
-type item = { addItem: (time: number) => void, format: (num:number) => string }
+type item = { addItem: (time: number) => void }
 
-const Timer = ({ addItem, format }:item) => {
+const Timer = ({ addItem }:item) => {
     const [isTimerRunning, setIsTimerRunning] = useState(false);
     const [timerHth, setTimerHth] = useState({hour: 0, minutes: 0});
     const [timer, setTimer] = useState(0);
@@ -61,7 +62,7 @@ const Timer = ({ addItem, format }:item) => {
         <form style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}} onSubmit={(e) => {e.preventDefault();}}>
             <p style={{marginTop: '8px', letterSpacing: '1.8px'}}>Hours and minutes</p>
             <HourToHour setTimer={setTimer} classname='timer-hth' data={timerHth} setData={setTimerHth}/>
-            <button onClick={() => handleTimer()} className="stopwatch-btn timer" style={{borderRadius: '8px'}}>{format(timer)}</button>
+            <button onClick={() => handleTimer()} className="stopwatch-btn timer" style={{borderRadius: '8px'}}>{TimeFormat(timer)}</button>
             <div className='timer-settings'>
                 <button onClick={() => setTimer(0)} className="timer-setting" >reset</button>
                 <button onClick={() => handleStopTimer()} className="timer-setting default" >{isTimerRunning ? 'stop' : 'start'}</button>

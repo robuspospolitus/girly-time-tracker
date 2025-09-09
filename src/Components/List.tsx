@@ -25,7 +25,7 @@ const List = () => {
   const deleteItem = (id:string) => {
     axios.delete(`http://localhost:5000/api/data/${category}/${id}`).then((response) => {
       setItems({...items,  [category]: response.data});
-    }).catch((err) => {throw new Error(`Deleting an existing item has failed: ${err}`)});
+    }).catch((err) => {throw new Error(`Deleting an item has failed: ${err}`)});
   };
 
   const addItem = (time: number) => {
@@ -39,7 +39,7 @@ const List = () => {
     } else throw new Error('The function addItem() was called with undefined time value or inputType(which should be impossible)');
   };
 
-  const handleTime = () => {
+  const totalTime = () => {
     let totalTime = 0;
     const length = items[category] ? items[category].length : 0;
     for (let i = 0; i < length; i++){
@@ -60,30 +60,6 @@ const List = () => {
     }
   }
 
-  const stopwatchformat = (num:number) => {
-    let minutes = num.toString();
-    let seconds = num.toString();
-    const hours = num / 3600 > 0 ? 
-      num / 3600 > 9 ? 
-      `${parseInt((num/3600).toString())}` :
-      `0${parseInt((num/3600).toString())}` : 
-      '00';
-    while(parseInt(minutes) >= 3600) minutes = (parseInt(minutes) - 3600).toString();
-    minutes = parseInt(minutes) / 60 > 0 ? 
-      parseInt(minutes) / 60 > 9 ?  
-      `${parseInt((parseInt(minutes)/60).toString())}` :
-      `0${parseInt((parseInt(minutes)/60).toString())}` : 
-      '00';
-    while(parseInt(seconds) >= 60) seconds = (parseInt(seconds) - 60).toString();
-    seconds = parseInt(seconds) > 0 ? 
-      parseInt(seconds) > 9 ?  
-      `${parseInt((parseInt(seconds)).toString())}` :
-      `0${parseInt((parseInt(seconds)).toString())}` : 
-      '00';
-    const format = hours + ':' + minutes + ':' + seconds;
-    return format
-  }
-
   return (
     <>
         <div className='form'>
@@ -95,8 +71,8 @@ const List = () => {
 
           { inputType === 'hours & minutes' && <HoursAndMinutes addItem={addItem} /> }
           { inputType === 'time to time' && <TimeToTime addItem={addItem} /> }
-          { inputType === 'stopwatch' && <Stopwatch addItem={addItem} format={stopwatchformat}/> }
-          { inputType === 'timer' && <Timer addItem={addItem} format={stopwatchformat}/> }
+          { inputType === 'stopwatch' && <Stopwatch addItem={addItem} /> }
+          { inputType === 'timer' && <Timer addItem={addItem} /> }
           <CategoriesProvider>
             <SelectCategory/>
           </CategoriesProvider>
@@ -112,7 +88,7 @@ const List = () => {
           ))}
         </div>
         <div id="static-total">
-          <h2>{category ? `You spent ${handleTime()} hours of doing ${category} in total ${":>"}` : 'Choose a category to see your progress'}</h2>
+          <h2>{category ? `You spent ${totalTime()} hours of doing ${category} in total ♡` : 'Choose a category to see your progress'}</h2>
         </div>
     </>
   )
