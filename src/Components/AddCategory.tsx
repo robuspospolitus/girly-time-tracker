@@ -1,4 +1,4 @@
-import { useCategoriesContext } from "./Utensils/CategoryContext";
+import { useCategoriesContext, useCategoryContext } from "./Utensils/CategoryContext";
 import { Dispatch, SetStateAction, useState } from "react";
 import axios from "axios";
 import '../Styles/AddCategory.scss';
@@ -9,43 +9,41 @@ type ListProps = {
 }
 
 const AddCategory = ({setItems}:ListProps) => {
-  const [category, setCategory] = useState('');
   const [categories, setCategories] = useCategoriesContext();
+  const [,setActual] = useCategoryContext();
+  const [category, setCategory] = useState('');
 
   const addCategory = () => {
     const temp = category.toLowerCase();
     if( temp !== '' && temp !== null && !categories.includes(temp)) {
       setCategories([...categories, temp]);
-      axios.post(`http://localhost:5000/api/data/${temp}`).then((response) => {
+      axios.post(`http://localhost:5000/api/data/${temp}`).then(() => {
         setCategory('');
       }).catch((err) => {throw new Error(`Adding new item has failed: ${err}`)});
     }
   }
 
-  const deleteAll = (e:string) => {
-    axios.delete(`http://localhost:5000/api/data/${e}`).then((response) => {
-      setItems(response.data);
-    }).catch((err) => {throw new Error(`Deleting an item has failed: ${err}`)});
+  const deleteCategory = (e:string, isAll:boolean) => {
+    if(isAll) {
+      axios.delete(`http://localhost:5000/api/data/${e}`).then((response) => {
+        setItems(response.data);
+      }).catch((err) => {throw new Error(`Deleting an item has failed: ${err}`)});
+    }
     setCategories(categories.filter((cat) => cat !== e))
-  }
-  const deleteOne = (e:string) => {
-    setCategories(categories.filter((cat) => cat !== e))
+    setActual('');
   }
   
-
   return(
     <div className="addcategory" >
       <form className="addcategory-input" onSubmit={e => e.preventDefault()}>
         <input id="addcategory" placeholder="Name of the new category..." onChange={(e) => setCategory(e.target.value)} value={category} />
         <button className="save-btn addsave" type="submit" onClick={() => addCategory()}>Save</button>
-
       </form>
       <div className="addcategory-list">
         { categories.map((cat, key) => (
           <CategoryView 
             cat={cat}
-            deleteAll={deleteAll} 
-            deleteOne={deleteOne}
+            deleteCategory={deleteCategory}
             key={key}
             />
         ))}
@@ -57,20 +55,15 @@ export default AddCategory;
 
 type CategoryProps = {
   cat: string,
-  deleteAll: (e:string) => void,
-  deleteOne: (e:string) => void,
+  deleteCategory: (e:string, isAll:boolean) => void,
 }
-function CategoryView({ cat, deleteAll, deleteOne }:CategoryProps) {
+function CategoryView({ cat, deleteCategory }:CategoryProps) {
   const [isOpen, setIsOpen] = useState(false);
-
-  const handleClick = (e:string) => {
-    setIsOpen(true);
-  }
 
   return (
     <div className="addcategory-category" key={cat}>
       <div className="hours addlabel">{cat.charAt(0).toUpperCase() + cat.slice(1).toLowerCase()}</div>
-      <button className="delete deleteaddcategory" onClick={() => handleClick(cat)}>x</button>
+      <button className="delete deleteaddcategory" onClick={() => setIsOpen(true)}>x</button>
       {isOpen && 
       <>
         <div id="confirmation-background" onClick={() => setIsOpen(false)}/>
@@ -81,8 +74,8 @@ function CategoryView({ cat, deleteAll, deleteOne }:CategoryProps) {
             permanently.`}
           </p>
           <div id="confirmation-choices-wrapper">
-            <button className="save-btn conf-btn" onClick={() => {setIsOpen(false);deleteAll(cat)}} >Delete the data</button>
-            <button className="save-btn conf-btn" onClick={() => {setIsOpen(false);deleteOne(cat)}} >Delete category, but save the data</button>
+            <button className="save-btn conf-btn" onClick={() => {setIsOpen(false); deleteCategory(cat, true)}} >Delete the data</button>
+            <button className="save-btn conf-btn" onClick={() => {setIsOpen(false); deleteCategory(cat, false)}} >Delete category, but save the data</button>
           </div>
         </div>
       </>}

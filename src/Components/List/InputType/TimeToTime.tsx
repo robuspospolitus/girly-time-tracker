@@ -5,7 +5,7 @@ import { useCategoryContext } from "../../Utensils/CategoryContext";
 type item = {
     addItem: (time: number) => void,
 }
-const TimeToTime = ({addItem}:item) => {
+const TimeToTime = ({ addItem }:item) => {
     const [hthFrom, setHthFrom] = useState({hour: 0, minutes: 0})
     const [hthTo, setHthTo] = useState({hour: 0, minutes: 0})
     const [category] = useCategoryContext();
