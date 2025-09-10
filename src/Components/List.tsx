@@ -1,4 +1,4 @@
-import { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction, memo } from 'react';
 import axios from "axios";
 import Icon from '@mdi/react';
 import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
@@ -15,7 +15,7 @@ type ListProps = {
   items: { [key: string]: Array<{id: string, date: string, hours: number}>},
   setItems: Dispatch<SetStateAction<{ [key: string]: Array<{id: string, date: string, hours: number}>}>>
 }
-const List = ({items, setItems}:ListProps) => {
+const List = memo(function({items, setItems}:ListProps) {
   const [inputType, setInputType] = useState('hours & minutes');
   const [category] = useCategoryContext();
   
@@ -95,6 +95,6 @@ const List = ({items, setItems}:ListProps) => {
         </div>
     </>
   )
-}
+});
 
 export default List;

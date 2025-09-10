@@ -1,13 +1,13 @@
 import '../Styles/Settings.scss';
 import Icon from '@mdi/react';
 import { mdiMenuLeft, mdiMenuDown } from '@mdi/js';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useState, memo } from 'react';
 
 type propsSettings = {
     setTheme: Dispatch<SetStateAction<string>>
 }
 
-const Settings = ({setTheme}: propsSettings) => {
+const Settings = memo(function({setTheme}: propsSettings) {
     const [open, setOpen] = useState(false);
     const themes = [ {
         light: [
@@ -53,5 +53,5 @@ const Settings = ({setTheme}: propsSettings) => {
             
         </div>
     )
-}
+});
 export default Settings;

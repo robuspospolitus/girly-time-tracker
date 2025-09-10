@@ -1,5 +1,5 @@
 import { useCategoriesContext, useCategoryContext } from "./Utensils/CategoryContext";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState, memo } from "react";
 import axios from "axios";
 import '../Styles/AddCategory.scss';
 import '../Styles/List.scss';
@@ -8,7 +8,7 @@ type ListProps = {
   setItems: Dispatch<SetStateAction<{ [key: string]: Array<{id: string, date: string, hours: number}>}>>
 }
 
-const AddCategory = ({setItems}:ListProps) => {
+const AddCategory = memo(function({setItems}:ListProps) {
   const [categories, setCategories] = useCategoriesContext();
   const [,setActual] = useCategoryContext();
   const [category, setCategory] = useState('');
@@ -50,7 +50,7 @@ const AddCategory = ({setItems}:ListProps) => {
       </div>
     </div>
   )
-}
+});
 export default AddCategory;
 
 type CategoryProps = {
