@@ -3,7 +3,7 @@ import { useCategoryContext } from "../../Utensils/CategoryContext";
 import HourToHour from "../HourToHour";
 import TimeFormat from "../TimeFormat";
 
-type item = { addItem: (time: number) => void }
+type item = { addItem: (time: Array<number>) => void }
 
 const Timer = ({ addItem }:item) => {
     const [isTimerRunning, setIsTimerRunning] = useState(false);
@@ -52,9 +52,10 @@ const Timer = ({ addItem }:item) => {
 
     const handleSubmit = () => {
         if(timer) {
-            const time = parseFloat((timer / 3600).toFixed(2));
-            if (time === 0) return;
-            addItem(time);
+            const hours = Math.floor(timer / 3600);
+            const minutes = Math.floor((timer / 60) - hours*60);
+            if (hours === 0 && minutes === 0) return;
+            addItem([hours, minutes]);
         }
     }
 

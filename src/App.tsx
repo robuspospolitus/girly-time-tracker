@@ -3,7 +3,7 @@ import { CategoryProvider, CategoriesProvider } from "./Components/Utensils/Cate
 import Icon from '@mdi/react';
 
 const App = () => {
-  const [items, setItems] = useState<{ [key: string]: Array<{id: string, date: string, hours: number}>}>({});
+  const [items, setItems] = useState<{ [key: string]: Array<{id: string, date: string, hours: number, minutes: number}>}>({});
   const [page, setPage] = useState('menu');
   const [theme, setTheme] = useState( localStorage.getItem('theme') || 'theme-light-orange');
 

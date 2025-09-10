@@ -2,7 +2,7 @@ import { useState, useRef } from "react"
 import { useCategoryContext } from "../../Utensils/CategoryContext"
 import TimeFormat from "../TimeFormat"
 
-type item = { addItem: (time: number) => void }
+type item = { addItem: (time: Array<number>) => void }
 
 const Stopwatch = ({ addItem }:item) => {
     const [stopwatch, setStopwatch] = useState(0)
@@ -27,16 +27,16 @@ const Stopwatch = ({ addItem }:item) => {
 
     const handleSubmit = () => {
         if(category !== '') {
-            const time = parseFloat((stopwatch / 3600).toFixed(2));
-            if (time === 0) return;
-            addItem(time);
+            const hours = Math.floor(stopwatch / 3600);
+            const minutes = Math.floor((stopwatch / 60) - hours*60);
+            if (hours === 0 && minutes === 0) return;
+            addItem([hours, minutes]);
         }
     }
 
     return (
         <form style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}} onSubmit={(e) => {e.preventDefault();}}>
             <button name='stopwatch' onClick={() => handleStopwatch()} className="stopwatch-btn" >{TimeFormat(stopwatch)}</button>
-            <p id='disclaimer' style={{color: 'red', margin: '4px', fontSize: '12px', textAlign: 'center', width: '80%'}}>Disclaimer: the current format does not support seconds, if the time divided by 3600 is a number less than one thousandth of an hour, it will not be saved</p>
         </form>
     )
 }

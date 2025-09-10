@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useCategoryContext } from "../../Utensils/CategoryContext";
 
 type item = {
-    addItem: (time: number) => void,
+    addItem: (time: Array<number>) => void,
 }
 const HoursAndMinutes = ({addItem}:item) => {
     const [hmin, setHmin] = useState({hour: 0, minutes: 0});
@@ -10,9 +10,8 @@ const HoursAndMinutes = ({addItem}:item) => {
 
     const handleSubmit = () => {
         if(hmin.hour >= 0 && hmin.hour <=23 && hmin.minutes >= 0 && hmin.minutes <= 59 && category) {
-            const time = hmin.hour + parseFloat((hmin.minutes / 60).toFixed(2));
-            if (time === 0) return;
-            addItem(time);
+            if (hmin.hour === 0 && hmin.minutes === 0) return;
+            addItem([hmin.hour, hmin.minutes]);
         }
     }
     

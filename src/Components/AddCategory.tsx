@@ -5,7 +5,7 @@ import '../Styles/AddCategory.scss';
 import '../Styles/List.scss';
 
 type ListProps = {
-  setItems: Dispatch<SetStateAction<{ [key: string]: Array<{id: string, date: string, hours: number}>}>>
+  setItems: Dispatch<SetStateAction<{ [key: string]: Array<{id: string, date: string, hours: number, minutes: number}>}>>
 }
 
 const AddCategory = memo(function({setItems}:ListProps) {
@@ -36,7 +36,7 @@ const AddCategory = memo(function({setItems}:ListProps) {
   return(
     <div className="addcategory" >
       <form className="addcategory-input" onSubmit={e => e.preventDefault()}>
-        <input id="addcategory" placeholder="Name of the new category..." onChange={(e) => setCategory(e.target.value)} value={category} />
+        <input id="addcategory" type="text" maxLength={25} placeholder="Name of the new category..." onChange={(e) => setCategory(e.target.value)} value={category} />
         <button className="save-btn addsave" type="submit" onClick={() => addCategory()}>Save</button>
       </form>
       <div className="addcategory-list">

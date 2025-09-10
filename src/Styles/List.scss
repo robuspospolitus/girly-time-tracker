@@ -175,7 +175,15 @@ input, .save-btn, #static-total, .timer-btn {
 .hours {
     text-align: end;
     font-size: 25px;
-    width: 55%;
+    width: 40%;
+    color: var(--hours);
+    cursor: default;
+}
+.minutes {
+    text-align: end;
+    font-size: 25px;
+    margin-left: 8px;
+    width: 45px;
     color: var(--hours);
     cursor: default;
 }
@@ -184,10 +192,10 @@ input, .save-btn, #static-total, .timer-btn {
 
 #static-total{
     width: 408px;
-    height: 48px;
     background-color: var(--item-background);
     display: flex;
     flex-direction: row;
+    min-height: 52px;
     align-items: center;
     position: fixed;
     bottom: 20px;
@@ -199,12 +207,12 @@ input, .save-btn, #static-total, .timer-btn {
     -webkit-box-shadow: 0px 0px 24px 0px rgba(66, 68, 90, 0.5);
     -moz-box-shadow: 0px 0px 24px 0px rgba(66, 68, 90, 0.5);
     box-shadow: 0px 0px 24px 0px rgba(66, 68, 90, 0.5);
-}
-h2 {
-    width: 100%;
-    text-align: center;
-    color: var(--text-secondary);
-    line-height: 26px;
+    h2 {
+        width: 100%;
+        text-align: center;
+        color: var(--text-secondary);
+        line-height: 26px;
+    }
 }
 
 p {
