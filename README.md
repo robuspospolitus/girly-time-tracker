@@ -23,7 +23,7 @@ All data the user provides is saved on their personal computer. The application 
 
 ## Categories
 
-Time can be entered into specific, separate categories. This way, hours spent on, for example, strength training and cardio are separated. These can be added or removed at will.
+Time can be entered into specific, separate categories. This way, hours spent on, for example, strength training and cardio are separated. These can be added or removed at will. You have the choice to delete the data upon deleting the category or leave them saved. To retrieve them just add the category of the same name as the one deleted.
 
 ## Themes
 
