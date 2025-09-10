@@ -28,7 +28,7 @@ const Settings = ({setTheme}: propsSettings) => {
             <div className='settingsitem' >
                 <div className='settingstitle' onClick={() => setOpen(!open)}>
                     <p className='settingsitemp'>Set theme</p>
-                    <Icon path={open ? mdiMenuDown : mdiMenuLeft} color='black' size={2}/>
+                    <Icon path={open ? mdiMenuDown : mdiMenuLeft} className='icon' size={2}/>
                 </div>
                 {   open &&
                 <div className='themetable'>
