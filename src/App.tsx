@@ -1,8 +1,9 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { CategoryProvider, CategoriesProvider } from "./Components/Utensils/CategoryContext";
 import Icon from '@mdi/react';
 
 const App = () => {
+  const [items, setItems] = useState<{ [key: string]: Array<{id: string, date: string, hours: number}>}>({});
   const [page, setPage] = useState('menu');
   const [theme, setTheme] = useState( localStorage.getItem('theme') || 'theme-light-orange');
 
@@ -17,11 +18,11 @@ const App = () => {
     }
     else if(name === 'list') {
       const List = require("./Components/List").default;
-      return(<List />);
+      return(<List items={items} setItems={setItems}/>);
     }
     else if(name === 'addcategory') {
       const AddCategory = require("./Components/AddCategory").default;
-      return(<CategoriesProvider><AddCategory /></CategoriesProvider>);
+      return(<CategoriesProvider><AddCategory setItems={setItems}/></CategoriesProvider>);
     }
     else if(name === 'settings') {
       const Settings = require("./Components/Settings").default;

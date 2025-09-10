@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import axios from "axios";
 import Icon from '@mdi/react';
 import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
@@ -11,8 +11,11 @@ import SelectCategory from './List/SelectCategory';
 import '../Styles/HourToHour.scss'
 import '../Styles/List.scss';
 
-const List = () => {
-  const [items, setItems] = useState<{ [key: string]: Array<{id: string, date: string, hours: number}>}>({});
+type ListProps = {
+  items: { [key: string]: Array<{id: string, date: string, hours: number}>},
+  setItems: Dispatch<SetStateAction<{ [key: string]: Array<{id: string, date: string, hours: number}>}>>
+}
+const List = ({items, setItems}:ListProps) => {
   const [inputType, setInputType] = useState('hours & minutes');
   const [category] = useCategoryContext();
   

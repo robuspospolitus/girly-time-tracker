@@ -1,18 +1,30 @@
-import { useCategoryContext, useCategoriesContext } from "./Utensils/CategoryContext";
+import { useCategoriesContext } from "./Utensils/CategoryContext";
+import { Dispatch, SetStateAction, useState } from "react";
+import axios from "axios";
 import '../Styles/AddCategory.scss';
 
-const AddCategory = () => {
-    const [category, setCategory] = useCategoryContext();
+type ListProps = {
+  setItems: Dispatch<SetStateAction<{ [key: string]: Array<{id: string, date: string, hours: number}>}>>
+}
+
+const AddCategory = ({setItems}:ListProps) => {
+    const [category, setCategory] = useState('');
     const [categories, setCategories] = useCategoriesContext();
 
     const addCategory = () => {
       const temp = category.toLowerCase();
       if( temp !== '' && temp !== null && !categories.includes(temp)) {
         setCategories([...categories, temp]);
-        setCategory('');
+        axios.post(`http://localhost:5000/api/data/${temp}`).then((response) => {
+          setCategory('');
+        }).catch((err) => {throw new Error(`Adding new item has failed: ${err}`)});
       }
     }
+
     const deleteCategory = (e:string) => {
+      axios.delete(`http://localhost:5000/api/data/${e}`).then((response) => {
+        setItems(response.data);
+      }).catch((err) => {throw new Error(`Deleting an item has failed: ${err}`)});
       setCategories(categories.filter((cat) => cat !== e))
     }
 
@@ -24,10 +36,10 @@ const AddCategory = () => {
 
           </form>
           <div className="addcategory-list">
-            { categories.map(category => (
-              <div className="addcategory-category" key={category}>
-                <div className="hours addlabel">{category.charAt(0).toUpperCase() + category.slice(1).toLowerCase()}</div>
-                <button className="delete deleteaddcategory" onClick={() => deleteCategory(category)}>x</button>
+            { categories.map(cat => (
+              <div className="addcategory-category" key={cat}>
+                <div className="hours addlabel">{cat.charAt(0).toUpperCase() + cat.slice(1).toLowerCase()}</div>
+                <button className="delete deleteaddcategory" onClick={() => deleteCategory(cat)}>x</button>
               </div>
             ))}
           </div>
