@@ -91,7 +91,7 @@ const List = ({items, setItems}:ListProps) => {
           ))}
         </div>
         <div id="static-total">
-          <h2>{category ? `You spent ${totalTime()} hours of doing ${category} in total ♡` : 'Choose a category to see your progress'}</h2>
+          <h2>{category ? `You spent ${totalTime()} hours on ${category} in total ♡` : 'Choose a category to see your progress'}</h2>
         </div>
     </>
   )

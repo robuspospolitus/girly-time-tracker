@@ -51,3 +51,45 @@
         }
     }
 }
+
+#confirmation-background {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    
+}
+#confirmation-wrapper {
+    position: absolute;
+    top: 0;
+    width: 400px;
+    margin: 10vh auto auto auto;
+    border-radius: 10px;
+    border-left: 2px solid var(--border-item-1);
+    border-top: 2px solid var(--border-item-1);
+    border-right: 2px solid var(--border-item-2);
+    border-bottom: 2px solid var(--border-item-2);
+    background-color: var(--item-background);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    p {
+        margin: 20px;
+        font-weight: bold;
+        font-size: 20px;
+    }
+    #confirmation-choices-wrapper {
+        display: flex;
+        flex-direction: row;
+        margin: 12px;
+        gap: 4px;
+        .conf-btn {
+            height: auto;
+            width: auto;
+            padding: 4px;
+        }
+    }
+}

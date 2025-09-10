@@ -166,6 +166,7 @@ input, .save-btn, #static-total, .timer-btn {
         font-size: 25px;
         padding-left: 25px;
         color: #616161;
+        cursor: default;
     }
 
    
@@ -176,6 +177,7 @@ input, .save-btn, #static-total, .timer-btn {
     font-size: 25px;
     width: 55%;
     color: var(--hours);
+    cursor: default;
 }
 
 
@@ -207,6 +209,7 @@ h2 {
 
 p {
     color: var(--logo);
+    cursor: default;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
