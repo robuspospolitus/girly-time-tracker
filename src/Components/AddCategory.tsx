@@ -7,12 +7,12 @@ import '../Styles/List.scss';
 type ListProps = {
   setItems: Dispatch<SetStateAction<{ [key: string]: Array<{id: string, date: string, hours: number, minutes: number}>}>>
 }
-
 const AddCategory = memo(function({setItems}:ListProps) {
   const [categories, setCategories] = useCategoriesContext();
   const [,setActual] = useCategoryContext();
   const [category, setCategory] = useState('');
 
+  // POST a category
   const addCategory = () => {
     const temp = category.toLowerCase();
     if( temp !== '' && temp !== null && !categories.includes(temp)) {
@@ -23,6 +23,7 @@ const AddCategory = memo(function({setItems}:ListProps) {
     }
   }
 
+  // DELETE a category
   const deleteCategory = (e:string, isAll:boolean) => {
     if(isAll) {
       axios.delete(`http://localhost:5000/api/data/${e}`).then((response) => {
@@ -36,7 +37,7 @@ const AddCategory = memo(function({setItems}:ListProps) {
   return(
     <div className="addcategory" >
       <form className="addcategory-input" onSubmit={e => e.preventDefault()}>
-        <input id="addcategory" type="text" maxLength={25} placeholder="Name of the new category..." onChange={(e) => setCategory(e.target.value)} value={category} />
+        <input id="addcategory" type="text" maxLength={20} placeholder="Name of the new category..." onChange={(e) => setCategory(e.target.value)} value={category} />
         <button className="save-btn addsave" type="submit" onClick={() => addCategory()}>Save</button>
       </form>
       <div className="addcategory-list">

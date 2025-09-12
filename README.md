@@ -38,6 +38,12 @@ Statistics page
 
 Sounds
 
+Animations
+
+Custom font
+
+Error boundary
+
 New logo
 
 Notifications

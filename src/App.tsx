@@ -24,10 +24,15 @@ const App = () => {
       const AddCategory = require("./Components/AddCategory").default;
       return(<CategoriesProvider><AddCategory setItems={setItems}/></CategoriesProvider>);
     }
+    else if(name === 'statistics') {
+      const Statistics = require("./Components/Statistics").default;
+      return(<CategoriesProvider><Statistics items={items} setItems={setItems}/></CategoriesProvider>);
+    }
     else if(name === 'settings') {
       const Settings = require("./Components/Settings").default;
       return(<Settings setTheme={setTheme}/>);
-  }}
+    }
+  }
 
   return (
     <div className={theme+ ' background'}>
@@ -38,6 +43,7 @@ const App = () => {
           <CategoryProvider>
             { page === 'list' && getPage(page)}
             { page === 'addcategory' && getPage(page)}
+            { page === 'statistics' && getPage(page)}
           </CategoryProvider>
           { page === 'settings' && getPage(page)}
         </div>

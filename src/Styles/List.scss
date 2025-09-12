@@ -162,15 +162,12 @@ input, .save-btn, #static-total, .timer-btn {
     flex-direction: row;
     align-items: center;
     margin-bottom: 2px;
-    .date {
-        font-size: 25px;
-        padding-left: 25px;
-        color: #616161;
-        cursor: default;
-    }
-
-   
-    
+}
+.date {
+    font-size: 25px;
+    padding-left: 25px;
+    color: #616161;
+    cursor: default;
 }
 .hours {
     text-align: end;

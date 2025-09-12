@@ -1,4 +1,4 @@
-import { useState, useEffect, Dispatch, SetStateAction, memo } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction, memo, useCallback, useMemo } from 'react';
 import axios from "axios";
 import Icon from '@mdi/react';
 import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
@@ -19,18 +19,21 @@ const List = memo(function({items, setItems}:ListProps) {
   const [inputType, setInputType] = useState('hours & minutes');
   const [category] = useCategoryContext();
   
+  // GET data
   useEffect(() => {
     axios.get("http://localhost:5000/api/data").then((response) => {
       setItems(response.data);
     }).catch((err) => {throw new Error(`Getting data from the server has failed: ${err}`)});
   }, []);
 
+  // DELETE an item
   const deleteItem = (id:string) => {
     axios.delete(`http://localhost:5000/api/data/${category}/${id}`).then((response) => {
       setItems({...items,  [category]: response.data});
     }).catch((err) => {throw new Error(`Deleting an item has failed: ${err}`)});
   };
 
+  // POST an item
   const addItem = (time: Array<number>) => {
     if(inputType && time) {
       const today = new Date()
@@ -42,7 +45,8 @@ const List = memo(function({items, setItems}:ListProps) {
     } else throw new Error('The function addItem() was called with undefined time value or inputType(which should be impossible)');
   };
 
-  const totalTime = () => {
+  // Total time spent on an activity
+  const totalTime = useMemo(() => {
     let totalTime = [0,0,0];
     const length = items[category] ? items[category].length : 0;
     for (let i = 0; i < length; i++){
@@ -52,8 +56,9 @@ const List = memo(function({items, setItems}:ListProps) {
     totalTime[2] = Math.round((totalTime[0] - totalTime[1])*60)
     totalTime[0] = parseFloat(totalTime[0].toFixed(2));
     return totalTime
-  }
+  }, [items, category])
 
+  // Change input type
   const handleInputChange = (e:string) => {
     const inputTypes = ['hours & minutes', 'time to time', 'stopwatch', 'timer']
     if(e === 'prev'){
@@ -97,10 +102,10 @@ const List = memo(function({items, setItems}:ListProps) {
         <div id="static-total">
           <h2>
             {category ? 
-              `You spent ${totalTime()[1]} hours and ${totalTime()[2]} minutes` : 
+              `You spent ${totalTime[1]} hours and ${totalTime[2]} minutes` : 
               'Choose a category to see your progress'}
             {category && <br/>}
-            {category && `(${totalTime()[0]} hours) on ${category} in total ♡`}
+            {category && `(${totalTime[0]} hours) on ${category} in total ♡`}
           </h2>
         </div>
     </>

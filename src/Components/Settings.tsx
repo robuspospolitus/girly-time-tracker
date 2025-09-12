@@ -6,7 +6,6 @@ import { Dispatch, SetStateAction, useState, memo } from 'react';
 type propsSettings = {
     setTheme: Dispatch<SetStateAction<string>>
 }
-
 const Settings = memo(function({setTheme}: propsSettings) {
     const [open, setOpen] = useState(false);
     const themes = [ {
@@ -49,8 +48,6 @@ const Settings = memo(function({setTheme}: propsSettings) {
                  </div>
                 }
             </div>
-            
-            
         </div>
     )
 });
