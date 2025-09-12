@@ -16,7 +16,7 @@ const AddCategory = memo(function({setItems}:ListProps) {
   const addCategory = () => {
     const temp = category.toLowerCase();
     if( temp !== '' && temp !== null && !categories.includes(temp)) {
-      setCategories([...categories, temp]);
+      setCategories([temp, ...categories]);
       axios.post(`http://localhost:5000/api/data/${temp}`).then(() => {
         setCategory('');
       }).catch((err) => {throw new Error(`Adding new item has failed: ${err}`)});
