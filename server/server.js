@@ -48,7 +48,7 @@
       if (!data[0][category]) {
         data[0][category] = [];
       }
-      if(req.body) data[0][category].push(req.body);
+      if(req.body) data[0][category].unshift(req.body);
       fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
       res.json(data[0][category]);
     } catch (err) {
