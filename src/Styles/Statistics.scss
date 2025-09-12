@@ -49,7 +49,8 @@
         }
     }
     #statistics-information {
-        height: 300px;
+        min-height: 250px;
+        padding-bottom: 32px;
         margin: 16px;
         text-align: left;
         span {

@@ -7,7 +7,7 @@ import HoursAndMinutes from './List/InputType/HoursAndMinutes';
 import TimeToTime from './List/InputType/TimeToTime';
 import Stopwatch from './List/InputType/Stopwatch';
 import Timer from './List/InputType/Timer';
-import SelectCategory from './List/SelectCategory';
+import SelectCategory from './Utensils/SelectCategory';
 import '../Styles/HourToHour.scss'
 import '../Styles/List.scss';
 
