@@ -120,6 +120,7 @@ const CategoryStats = ({items}:catStatsProp) => {
 
     // Total time spent on an activity
     const totalTime = useMemo(() => {
+        if(!category) return [0, 0, 0];
         let totalTime = [0,0,0];
         for (let i = 0; i < length; i++) {
             totalTime[0] = totalTime[0] + items[category][i].hours + (items[category][i].minutes /60);
@@ -132,13 +133,15 @@ const CategoryStats = ({items}:catStatsProp) => {
 
     // Date of the first and last added time
     const addedTimeDate = useMemo(() => {
+        if(!category) return ['none', 'none'];
         const length = items[category] ? items[category].length - 1 : 0;
-        const date = [category ? items[category][length].date : 'none', category ? items[category][0].date : 'none']
+        const date = [items[category][length].date, items[category][0].date]
         return date;
     }, [items, category])
 
     // Most active month of the category
     const mostActiveMonth = useMemo(() => {
+        if(!category) return 'none';
         let months = [''];
         for (let i = 0; i < length; i++) {
             const monthnum = parseInt(items[category][i].date[3] + items[category][i].date[4]);
@@ -181,21 +184,31 @@ const CategoryStats = ({items}:catStatsProp) => {
         return mostFrequentElement(days);
     }, [items, category])
 
-    // Average
-    const averagePerMonth = useMemo(() => {
-        let averageTime = [0];
+    // returns average hours per 
+    const averagePer = useMemo(() => {
+        if(!category) return [0, 0, 0, 0];
+        let averageTime = [0, 0, 0, 0];
         let months = 1;
         for (let i = 1; i < length; i++) {
             let item = items[category][i].date;
             let lastitem = items[category][i-1].date;
-            let month = new Date(item.split('/').reverse().join('-')).getMonth().toString() + new Date(item.split('/').reverse().join('-')).getMonth().toString();
-            let lastMonth = new Date(lastitem.split('/').reverse().join('-')).getMonth().toString() + new Date(lastitem.split('/').reverse().join('-')).getMonth().toString();
+            const month = new Date(item.split('/').reverse().join('-')).getMonth().toString() + new Date(item.split('/').reverse().join('-')).getFullYear().toString();
+            const lastMonth = new Date(lastitem.split('/').reverse().join('-')).getMonth().toString() + new Date(lastitem.split('/').reverse().join('-')).getFullYear().toString();
             if(month !== lastMonth) months += 1;
         }
+
+        let then = length ? new Date(items[category][length-1].date.split('/').reverse().join('-')) : new Date();
+        let now = new Date();
+        let daysinbetween = Math.trunc((now.getTime() - then.getTime()) / (1000 * 60 * 60 * 24))
+        let weeksinbetween = Math.trunc(daysinbetween / 7)
+
         for (let i = 0; i < length; i++) {
             averageTime[0] = averageTime[0] + items[category][i].hours + (items[category][i].minutes /60);
         }
-        averageTime[0] = parseFloat((averageTime[0] / months).toFixed(2));
+        averageTime[0] = parseFloat((averageTime[0]).toFixed(2));
+        averageTime[1] = parseFloat((averageTime[0] / months).toFixed(2));
+        averageTime[2] = parseFloat((averageTime[0] / weeksinbetween).toFixed(2));
+        averageTime[3] = parseFloat((averageTime[0] / daysinbetween).toFixed(2));
         return averageTime;
     }, [items, category])
 
@@ -207,9 +220,9 @@ const CategoryStats = ({items}:catStatsProp) => {
             <span>First added time date: <i>{addedTimeDate[0]}</i></span>
             <span>Most active month: <i>{mostActiveMonth}</i></span>
             <span>Most active day of the week: <i>{mostActiveDay}</i></span>
-            <span style={{marginTop: '8px'}} >Average spent hours per month: <i>{averagePerMonth[0]}</i></span>
-            <span>Average spent hours per week: <i>in-progress</i></span>
-            <span>Average spent hours per day: <i>in-progress</i></span>
+            <span style={{marginTop: '8px'}} >Average spent hours per month: <i>{averagePer[1]}</i></span>
+            <span>Average spent hours per week: <i>{averagePer[2]}</i></span>
+            <span>Average spent hours per day: <i>{averagePer[3]}</i></span>
         </>}
         </>
     )
