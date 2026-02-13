@@ -86,8 +86,23 @@ const Statistics = memo(({ items, setItems }:StatProps) => {
             </div>
             <div className='separator'/>
             <div id="statistics-up">
-                <section className="blur-wrap statup">
-
+                <section className="blur-wrap statup heart-wrapper">
+                    <h3 id='heart'>
+                        ******ㅤㅤㅤㅤㅤ******<br/>
+                        ***@@@@***ㅤㅤㅤ***@@@@***<br/>
+                        **@@@@@@@@@**ㅤ**@@@@@@@@@**<br/>
+                        **@@@@@@@@@@@@*@@@@@@@@@@@@**<br/>
+                        *@@@@@@@@@@@@@@@@@@@@@@@@@@@*<br/>
+                        **@@@@@@@@@@@@@@@@@@@@@@@@@**<br/>
+                        **@@@@@@@@@@@@@@@@@@@@@@@@**<br/>
+                        **@@@@@@@@@@@@@@@@@@@**<br/>
+                        **@@@@@@@@@@@@@@@**<br/>
+                        **@@@@@@@@@@@**<br/>
+                        ***@@@@@***<br/>
+                        ***@***<br/>
+                        ***<br/>
+                        *
+                    </h3>
                 </section>
                 <section className="blur-wrap statup">
                     <h3>Overall</h3>

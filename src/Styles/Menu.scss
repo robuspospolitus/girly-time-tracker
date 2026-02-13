@@ -15,7 +15,7 @@
     align-items: center;
     cursor: pointer;
     will-change: transform;
-    
+    user-select: none;
 }
 .menuitem::before {
     content: "";

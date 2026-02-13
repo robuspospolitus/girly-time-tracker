@@ -31,7 +31,6 @@ button {
     margin: 0 auto 0 auto;
     animation: background-animation 20s infinite linear;
 }
-
 h1 {
     background-color: #00000000;
     width: 255px;
@@ -44,6 +43,7 @@ h1 {
     cursor: default;
 }
 .logo {
+    user-select: none;
     animation: start 1s ease-out;
 }
 
@@ -56,6 +56,8 @@ h1 {
     left: 6vw;
     border-radius: 8px;
     animation: start 1s ease;
+    user-select: none;
+    cursor: pointer;
 }
 
 .gobackicon {
@@ -75,6 +77,7 @@ h1 {
     align-items: center;
     text-align: center;
     transition: all 0.3s ease;
+    user-select: none;
 }
 .delete:hover {
     background-color: #a74e4e;

@@ -7,6 +7,7 @@
         align-items: baseline;
         margin: 16px;
         margin-bottom: 8px;
+        user-select: none;
         h2 {
             width: 50%;
             font-size: 32px;
@@ -26,13 +27,14 @@
     #statistics-up{
         display: flex;
         flex-direction: row;
-        align-items: center;
+        align-items:start;
         gap: 16px;
         margin: 16px;
         margin-top: 20px;
         .statup {
-            width: 50%;
-            min-height: 200px;
+            width: 100%;
+            min-height: 180px;
+            height: 100%;
             h3 {
                 color: var(--logo);
                 text-align: left;
@@ -79,5 +81,31 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    #heart {
+        height: 100%;
+        width: 100%;
+        margin: auto;
+        font-size: 10px;
+        font-family: monospace;
+        text-align: center !important;
+        background: linear-gradient(to right, #ff00007a 0%, #ff66007a 10%, #ffe6007a 20%,#fffb007a 30%, #91ff007a 40%, #00ff957a 50%, #00d9ff7a 60%, #0059ff7a 70%, #a200ff7a 80%, #ff71d07a 90%, #ff00007a 100%);
+        background-size: 200% auto;
+        color: #000;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: gradient 5s linear infinite;
+        user-select: none;
+    }
+}
+.heart-wrapper {
+    max-width: 200px;
+    flex-direction: row;
+    align-items:center;
+}
 
+@keyframes gradient {
+    to {
+        background-position: 200% center;
+    }
 }
