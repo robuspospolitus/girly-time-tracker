@@ -76,7 +76,7 @@ const List = memo(function({items, setItems}:ListProps) {
         <div className='form'>
           <div id='change-input-type'>
             <div onClick={()=> handleInputChange('prev')}><Icon size={1} path={mdiChevronLeft} className='icon'/></div>
-            <p>{inputType}</p>
+            <p key={inputType}>{inputType}</p>
             <div onClick={() => handleInputChange('next')}><Icon size={1} path={mdiChevronRight} className='icon'/></div>
           </div>
 

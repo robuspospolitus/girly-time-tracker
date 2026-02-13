@@ -4,6 +4,7 @@ import Icon from '@mdi/react';
 
 const App = () => {
   const [items, setItems] = useState<{ [key: string]: Array<{id: string, date: string, hours: number, minutes: number}>}>({});
+  const [startAnimation, setStartAnimation] = useState(true);
   const [page, setPage] = useState('menu');
   const [theme, setTheme] = useState( localStorage.getItem('theme') || 'theme-light-orange');
 
@@ -14,7 +15,7 @@ const App = () => {
   const getPage = (name:string) => {
     if(name === 'menu') {
       const Menu = require("./Components/Menu").default;
-      return(<Menu setPage={setPage}/>)
+      return(<Menu setPage={setPage} isStart={startAnimation} setStart={setStartAnimation}/>)
     }
     else if(name === 'list') {
       const List = require("./Components/List").default;
@@ -38,7 +39,7 @@ const App = () => {
     <div className={theme+ ' background'}>
         <div id="main-app">
           { page !== 'menu' && <div className="goback" onClick={() => setPage('menu')}> <Icon path={require('@mdi/js').mdiArrowLeft} className="gobackicon" title="arrow-left" size={1} color="white"/></div>}
-          <h1>Girly Time Tracker</h1>
+          <h1 className="logo">Girly Time Tracker</h1>
           { page === 'menu' && getPage(page)}
           <CategoryProvider>
             { page === 'list' && getPage(page)}

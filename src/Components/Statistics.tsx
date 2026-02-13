@@ -90,6 +90,7 @@ const Statistics = memo(({ items, setItems }:StatProps) => {
 
                 </section>
                 <section className="blur-wrap statup">
+                    <h3>Overall</h3>
                     <p>Total time: {totalTime[1]}h {totalTime[2]}m, {totalTime[0]}h</p>
                     <p>Most active month: {mostActiveMonth}</p>
                     <p>Most active category: {mostActiveCat[0][1]}</p>
@@ -184,7 +185,7 @@ const CategoryStats = ({items}:catStatsProp) => {
         return mostFrequentElement(days);
     }, [items, category])
 
-    // returns average hours per 
+    // Returns average hours per all/month/week/days
     const averagePer = useMemo(() => {
         if(!category) return [0, 0, 0, 0];
         let averageTime = [0, 0, 0, 0];
@@ -220,9 +221,9 @@ const CategoryStats = ({items}:catStatsProp) => {
             <span>First added time date: <i>{addedTimeDate[0]}</i></span>
             <span>Most active month: <i>{mostActiveMonth}</i></span>
             <span>Most active day of the week: <i>{mostActiveDay}</i></span>
-            <span style={{marginTop: '8px'}} >Average spent hours per month: <i>{averagePer[1]}</i></span>
+            <span style={{marginTop: '8px'}} >Average spent hours per day: <i>{averagePer[3]}</i></span>
             <span>Average spent hours per week: <i>{averagePer[2]}</i></span>
-            <span>Average spent hours per day: <i>{averagePer[3]}</i></span>
+            <span>Average spent hours per month: <i>{averagePer[1]}</i></span>
         </>}
         </>
     )

@@ -32,10 +32,16 @@
         margin-top: 20px;
         .statup {
             width: 50%;
-            height: 200px;
+            min-height: 200px;
+            h3 {
+                color: var(--logo);
+                text-align: left;
+                width: 90%;
+            }
             p {
                 width: 90%;
                 text-align: left;
+                font-size: 18px;
             }
             ol {
                 width: 90%;
@@ -43,6 +49,7 @@
                     text-align: left;
                     margin-left: 16px;
                     color: var(--logo);
+                    font-size: 18px;
                 }
             }
             

@@ -34,8 +34,6 @@ The app offers a variety of color themes, allowing you to customize it to your t
 
 ### I plan to implement:
 
-Statistics page
-
 Sounds
 
 Animations

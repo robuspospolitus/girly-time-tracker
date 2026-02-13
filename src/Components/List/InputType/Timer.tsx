@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useCategoryContext } from "../../Utensils/CategoryContext";
 import HourToHour from "../HourToHour";
 import TimeFormat from "../TimeFormat";
@@ -10,8 +10,14 @@ const Timer = ({ addItem }:item) => {
     const [timerHth, setTimerHth] = useState({hour: 0, minutes: 0});
     const [timer, setTimer] = useState(0);
     const [category] = useCategoryContext();
+    const [reset, setReset] = useState(false);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const resetRef = useRef(reset);
 
+    useEffect(() => {
+        resetRef.current = reset;
+    }, [reset]);
+    
     const handleTimer = () => {
         if(!isTimerRunning){
             const hours = timerHth.hour > 0 ? 
@@ -28,6 +34,8 @@ const Timer = ({ addItem }:item) => {
     }
 
     const handleStopTimer = () => {
+        if(!timer || !category) return;
+        setReset(false);
         setIsTimerRunning(prev => {
             if (!prev && category) {
                 let i = timer;
@@ -37,7 +45,7 @@ const Timer = ({ addItem }:item) => {
                     return t - 1
                 });
                 if(i <= 0) {
-                    handleSubmit();
+                    if(!resetRef.current) handleSubmit();
                     if(intervalRef.current !== null) clearInterval(intervalRef.current);
                     setIsTimerRunning(false);
                 }
@@ -49,9 +57,15 @@ const Timer = ({ addItem }:item) => {
             return !prev;
         });
     }
+    const handleReset = () => {
+            setReset(true);
+            setTimer(0);
+            setIsTimerRunning(false);
+            return;
+    }
 
     const handleSubmit = () => {
-        if(timer) {
+        if(timer > 0) {
             const hours = Math.floor(timer / 3600);
             const minutes = Math.floor((timer / 60) - hours*60);
             if (hours === 0 && minutes === 0) return;
@@ -65,7 +79,7 @@ const Timer = ({ addItem }:item) => {
             <HourToHour setTimer={setTimer} classname='timer-hth' data={timerHth} setData={setTimerHth}/>
             <button onClick={() => handleTimer()} className="stopwatch-btn timer" style={{borderRadius: '8px'}}>{TimeFormat(timer)}</button>
             <div className='timer-settings'>
-                <button onClick={() => setTimer(0)} className="timer-setting" >reset</button>
+                <button onClick={() => handleReset()} className="timer-setting" >reset</button>
                 <button onClick={() => handleStopTimer()} className="timer-setting default" >{isTimerRunning ? 'stop' : 'start'}</button>
             </div>
         </form>
