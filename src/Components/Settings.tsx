@@ -29,8 +29,7 @@ const Settings = memo(function({setTheme}: propsSettings) {
                     <p className='settingsitemp'>Set theme</p>
                     <Icon path={open ? mdiMenuDown : mdiMenuLeft} className='icon' size={2}/>
                 </div>
-                {   open &&
-                <div className='themetable'>
+                <div className='themetable' style={{maxHeight: `${open ? "232px":0}`, opacity: `${open ? 1:0}`}}>
                     <div className='themelist'>
                         {themes[0].light.map(theme => (
                             <div className='theme' key={theme.id} onClick={() => setTheme(theme.id)}>
@@ -46,7 +45,7 @@ const Settings = memo(function({setTheme}: propsSettings) {
                         ))}
                     </div>
                  </div>
-                }
+                
             </div>
         </div>
     )

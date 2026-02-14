@@ -32,6 +32,7 @@
             text-align: left;
             margin-left: 16px;
             width: 100%;
+            cursor: pointer;
         }
         .icon {
             color: var(--logo);
@@ -44,6 +45,8 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.2s ease;
 }
 .themelist {
     height: 170px;

@@ -74,8 +74,8 @@ const Timer = ({ addItem }:item) => {
     }
 
     return (
-        <form style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}} onSubmit={(e) => {e.preventDefault();}}>
-            <p style={{marginTop: '8px', letterSpacing: '1.8px'}}>Hours and minutes</p>
+        <form style={{display: 'flex', flexDirection: 'column', alignItems: 'center', animation: "start50 0.5s ease"}} onSubmit={(e) => {e.preventDefault();}}>
+            <p style={{marginTop: '8px', letterSpacing: '1.8px'}}>hours : minutes</p>
             <HourToHour setTimer={setTimer} classname='timer-hth' data={timerHth} setData={setTimerHth}/>
             <button onClick={() => handleTimer()} className="stopwatch-btn timer" style={{borderRadius: '8px'}}>{TimeFormat(timer)}</button>
             <div className='timer-settings'>

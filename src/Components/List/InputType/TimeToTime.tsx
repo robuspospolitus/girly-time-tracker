@@ -35,7 +35,7 @@ const TimeToTime = ({ addItem }:item) => {
     }
     
     return (
-        <form className='form-change' onSubmit={(e) => {e.preventDefault(); handleSubmit()}}>
+        <form className='form-change' style={{animation: "start50 0.5s ease"}} onSubmit={(e) => {e.preventDefault(); handleSubmit()}}>
             <HourToHour data={hthFrom} setData={setHthFrom}/>
             <HourToHour data={hthTo} setData={setHthTo}/>
             <button name='submit' type='submit' className="save-btn" >Save Time</button>

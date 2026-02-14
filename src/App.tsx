@@ -6,6 +6,7 @@ const App = () => {
   const [items, setItems] = useState<{ [key: string]: Array<{id: string, date: string, hours: number, minutes: number}>}>({});
   const [startAnimation, setStartAnimation] = useState(true);
   const [page, setPage] = useState('menu');
+  const [isBack, setIsBack] = useState(false);
   const [theme, setTheme] = useState( localStorage.getItem('theme') || 'theme-light-orange');
 
   useLayoutEffect(() => {
@@ -34,20 +35,25 @@ const App = () => {
       return(<Settings setTheme={setTheme}/>);
     }
   }
+  const handleGoBack = () => {
+    setIsBack(true);
+    setTimeout(() => {
+      setPage('menu');
+      setIsBack(false);
+    }, 200)
+  }
 
   return (
     <div className={theme+ ' background'}>
-        <div id="main-app">
-          { page !== 'menu' && <div className="goback" onClick={() => setPage('menu')}> <Icon path={require('@mdi/js').mdiArrowLeft} className="gobackicon" title="arrow-left" size={1} color="white"/></div>}
-          <h1 className="logo">Girly Time Tracker</h1>
-          { page === 'menu' && getPage(page)}
-          <CategoryProvider>
-            { page === 'list' && getPage(page)}
-            { page === 'addcategory' && getPage(page)}
-            { page === 'statistics' && getPage(page)}
-          </CategoryProvider>
-          { page === 'settings' && getPage(page)}
-        </div>
+      <div id="main-app">
+        { page !== 'menu' && <div className="goback" onClick={() => handleGoBack()}> <Icon path={require('@mdi/js').mdiArrowLeft} className="gobackicon" title="arrow-left" size={1} color="white"/></div>}
+        <h1 className="logo">Girly Time Tracker</h1>
+        { page === 'menu' && getPage(page)}
+        { page === 'settings' && <div className={`page-animation-wrapper ${isBack && "page-animation-wrapper-close"}`}>{getPage(page)}</div>}
+        <CategoryProvider>
+          { (page === 'list' || page==='addcategory' || page==='statistics') && <div className={`page-animation-wrapper ${isBack && "page-animation-wrapper-close"}`}>{getPage(page)}</div>}
+        </CategoryProvider>
+      </div>
     </div>
   );
 }

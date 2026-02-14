@@ -16,7 +16,7 @@ const HoursAndMinutes = ({addItem}:item) => {
     }
     
     return (
-        <form className="form-change" onSubmit={(e) => {e.preventDefault(); handleSubmit()}}>
+        <form className="form-change" style={{animation: "start50 0.5s ease"}} onSubmit={(e) => {e.preventDefault(); handleSubmit()}}>
             <input name="hours" max={23} min={0} type="number" maxLength={2} placeholder="Hours" onChange={(e) => setHmin({...hmin, hour: parseInt(e.target.value)}) }/>
             <input name="minutes" max={59} min={0} type="number" maxLength={2} placeholder="Minutes" onChange={(e) => setHmin({...hmin, minutes: parseInt(e.target.value)}) }/>
             <button name='submit' type='submit' className="save-btn">Save Time</button>

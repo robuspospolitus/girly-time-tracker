@@ -16,6 +16,8 @@
     cursor: pointer;
     will-change: transform;
     user-select: none;
+    animation: main-panels-slide-in 0.5s ease-out;
+    animation-fill-mode: backwards;
 }
 .menuitem::before {
     content: "";

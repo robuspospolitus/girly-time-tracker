@@ -161,6 +161,10 @@ input, .save-btn, #static-total, .timer-btn {
         .select-cat-title:hover {
             background-color: #0000000a;
         }
+        .select-dropdown {
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.2s ease;
+        }
     }
 }
 
@@ -256,9 +260,4 @@ input[type=number] {
     .form {
         margin: 20px 10px 16px 10px;
     }
-}
-
-@keyframes startlistleft {
-    from {transform: translate(-200px); opacity: 0;}
-    to {transform: translate(0); opacity: 1;}
 }

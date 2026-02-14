@@ -35,7 +35,7 @@ const Stopwatch = ({ addItem }:item) => {
     }
 
     return (
-        <form style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}} onSubmit={(e) => {e.preventDefault();}}>
+        <form style={{display: 'flex', flexDirection: 'column', alignItems: 'center', animation: "start50 0.5s ease"}} onSubmit={(e) => {e.preventDefault();}}>
             <button name='stopwatch' onClick={() => handleStopwatch()} className="stopwatch-btn" >{TimeFormat(stopwatch)}</button>
         </form>
     )
