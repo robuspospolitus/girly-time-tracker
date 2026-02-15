@@ -44,7 +44,7 @@ const App = () => {
   }
 
   return (
-    <div className={theme+ ' background'}>
+    <div className={theme+ ' background ' + theme.split("-")[1]}>
       <div id="main-app">
         { page !== 'menu' && <div className="goback" onClick={() => handleGoBack()}> <Icon path={require('@mdi/js').mdiArrowLeft} className="gobackicon" title="arrow-left" size={1} color="white"/></div>}
         <h1 className="logo">Girly Time Tracker</h1>

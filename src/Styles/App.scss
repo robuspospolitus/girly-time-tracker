@@ -1,3 +1,7 @@
+@font-face {
+    font-family: superwoobly;
+    src: url(../Assets/SuperWoobly-8MJlz.ttf);
+}
 *{
     margin: 0;
     padding: 0;
@@ -39,13 +43,31 @@ h1 {
     color: var(--logo);
 
     font-family:'Times New Roman', Times, serif;
-    font-style: oblique;
+    //font-style: oblique;
     cursor: default;
 }
 .logo {
     user-select: none;
     animation: start 1s ease-out;
+    height: 50px;
+    text-align: center;
+    font-family: superwoobly;
+    width: auto;
+    background: linear-gradient(to right, var(--logo) 30%, var(--text-secondary) 60%, var(--border-input-2) 80%, var(--logo) 100%);
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient 20s linear infinite;
 }
+.dark > #main-app > .logo {
+        background: linear-gradient(to right, var(--logo) 30%, var(--item-background) 60%, var(--secondary) 80%, var(--logo) 100%);
+        background-size: 200% auto;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: gradient 20s linear infinite;
+} 
 
 .goback {
     width: 50px;
@@ -88,7 +110,7 @@ h1 {
 }
 
 .page-animation-wrapper {
-    height: calc(100vh - 77px);
+    height: calc(100vh - 90px);
     animation: startlist 0.5s ease-in;
 }
 .page-animation-wrapper-close {
@@ -119,4 +141,7 @@ h1 {
 @keyframes closelist {
     from {transform: translate(0); opacity: 1;}
     to {transform: translate(200px); opacity: 0;}
+}
+@keyframes gradient {
+    to { background-position: 200% center; }
 }

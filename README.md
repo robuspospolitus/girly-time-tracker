@@ -36,15 +36,9 @@ The app offers a variety of color themes, allowing you to customize it to your t
 
 Sounds
 
-Custom font
-
 Error boundary
 
-New logo
-
 Notifications
-
-And more to come... (Imagination is the limit)
 
 
 ## How to install?
