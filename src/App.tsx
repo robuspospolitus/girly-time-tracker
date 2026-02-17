@@ -1,6 +1,7 @@
 import { useLayoutEffect, useState } from "react";
 import { CategoryProvider, CategoriesProvider } from "./Components/Utensils/CategoryContext";
 import Icon from '@mdi/react';
+import ErrorBoundary, { ErrorFallback } from './Components/Utensils/ErrorBoundary';
 
 const App = () => {
   const [items, setItems] = useState<{ [key: string]: Array<{id: string, date: string, hours: number, minutes: number}>}>({});
@@ -44,17 +45,19 @@ const App = () => {
   }
 
   return (
-    <div className={theme+ ' background ' + theme.split("-")[1]}>
-      <div id="main-app">
-        { page !== 'menu' && <div className="goback" onClick={() => handleGoBack()}> <Icon path={require('@mdi/js').mdiArrowLeft} className="gobackicon" title="arrow-left" size={1} color="white"/></div>}
-        <h1 className="logo">Girly Time Tracker</h1>
-        { page === 'menu' && getPage(page)}
-        { page === 'settings' && <div className={`page-animation-wrapper ${isBack && "page-animation-wrapper-close"}`}>{getPage(page)}</div>}
-        <CategoryProvider>
-          { (page === 'list' || page==='addcategory' || page==='statistics') && <div className={`page-animation-wrapper ${isBack && "page-animation-wrapper-close"}`}>{getPage(page)}</div>}
-        </CategoryProvider>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <div className={theme+ ' background ' + theme.split("-")[1]}>
+        <div id="main-app">
+          { page !== 'menu' && <div className="goback" onClick={() => handleGoBack()}> <Icon path={require('@mdi/js').mdiArrowLeft} className="gobackicon" title="arrow-left" size={1} color="white"/></div>}
+          <h1 className="logo">Girly Time Tracker</h1>
+          { page === 'menu' && getPage(page)}
+          { page === 'settings' && <div className={`page-animation-wrapper ${isBack && "page-animation-wrapper-close"}`}>{getPage(page)}</div>}
+          <CategoryProvider>
+            { (page === 'list' || page==='addcategory' || page==='statistics') && <div className={`page-animation-wrapper ${isBack && "page-animation-wrapper-close"}`}>{getPage(page)}</div>}
+          </CategoryProvider>
+        </div>
       </div>
-    </div>
+    </ErrorBoundary>
   );
 }
 export default App;

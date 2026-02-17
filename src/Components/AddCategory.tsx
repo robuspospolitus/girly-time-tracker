@@ -76,7 +76,7 @@ function CategoryView({ cat, deleteCategory }:CategoryProps) {
           </p>
           <div id="confirmation-choices-wrapper">
             <button className="save-btn conf-btn" onClick={() => {setIsOpen(false); deleteCategory(cat, true)}} >Delete the data</button>
-            <button className="save-btn conf-btn" onClick={() => {setIsOpen(false); deleteCategory(cat, false)}} >Delete category, but save the data</button>
+            <button className="save-btn conf-btn" onClick={() => {setIsOpen(false); deleteCategory(cat, false)}} >Delete category, but store the data</button>
           </div>
         </div>
       </>}
