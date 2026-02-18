@@ -8,7 +8,7 @@ esbuild.build({
   sourcemap: false,
   outdir: 'build',
   plugins: [sassPlugin()],
-  loader: { '.ts': 'ts', '.tsx': 'tsx', '.js': 'js', '.jsx': 'jsx', '.png': 'file', '.svg': 'file', '.ico': 'file' },
+  loader: { '.ts': 'ts', '.tsx': 'tsx', '.js': 'js', '.jsx': 'jsx', '.png': 'file', '.svg': 'file', '.ico': 'file', '.ttf':'file' },
   define: { 'process.env.NODE_ENV': '"production"' },
   target: ['chrome105'],
 }).catch(() => process.exit(1));

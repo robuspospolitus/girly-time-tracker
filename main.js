@@ -20,6 +20,7 @@ if (!gotTheLock) {
         }
     });
     app.once("ready", () => {
+        if (process.platform === 'win32') app.setAppUserModelId("Girly Time Tracker");
         createWindow();
         if(!serverProcess) createServer();
         app.on('activate', () => {
@@ -61,7 +62,6 @@ const createServer = () => {
     const userDataPath = app.getPath('userData');
     serverProcess = fork(path.join(__dirname, 'server', 'server.js'), [userDataPath]);
 }
-
 
 function createWindow() {
     if ( win && !win.isDestroyed() ) {

@@ -11,6 +11,11 @@ import SelectCategory from './Utensils/SelectCategory';
 import '../Styles/HourToHour.scss'
 import '../Styles/List.scss';
 
+type NotificationProps = {
+  hours: number,
+  minutes: number,
+  category: string,
+}
 type ListProps = {
   items: { [key: string]: Array<{id: string, date: string, hours: number, minutes: number}>},
   setItems: Dispatch<SetStateAction<{ [key: string]: Array<{id: string, date: string, hours: number, minutes: number}>}>>
@@ -41,8 +46,9 @@ const List = memo(function({items, setItems}:ListProps) {
       const dateid = String(today.getDate()).padStart(2, '0')+String(today.getMonth() + 1).padStart(2, '0')+ today.getFullYear()+today.getHours()+today.getMinutes()+today.getSeconds()+today.getMilliseconds();
       axios.post(`http://localhost:5000/api/data/${category}`, { id: dateid, date: todaysdate, hours: time[0], minutes: time[1] }).then((response) => {
         setItems({...items, [category]: response.data});
+        notification({hours: time[0], minutes: time[1], category: category});
       }).catch((err) => {throw new Error(`Adding new item has failed: ${err}`)});
-    } else throw new Error('The function addItem() was called with undefined time value or inputType(which should be impossible)');
+    } else throw new Error('The function addItem() was called with undefined time value or inputType (which should be impossible)');
   };
 
   // Total time spent on an activity
@@ -68,6 +74,27 @@ const List = memo(function({items, setItems}:ListProps) {
     else if(e === 'next'){
       if (inputTypes.indexOf(inputType) === inputTypes.length-1) setInputType(inputTypes[0]);
       else setInputType(inputTypes[inputTypes.indexOf(inputType) + 1])
+    }
+  }
+
+  // Notifications when time is saved while minimized
+  const notification = ({hours, minutes, category}:NotificationProps) => {
+    if(!document.hasFocus() || document.hidden) {
+      // should be granted but its better to check
+      if(Notification?.permission === "granted"){
+        new Notification('Recorded the entry', {
+          body: `Time spent on ${category} has been saved. Total time is ${hours} hours and ${minutes} minutes`,
+          icon: 'icon.ico',
+        })
+      } else {
+        Notification.requestPermission().then((res) => {
+          if(res === "granted") {
+            new Notification('Recorded the entry', {
+              body: `Time spent on ${category} has been saved. Total time is ${hours} hours and ${minutes} minutes`,
+              icon: `icon.ico`,
+            })}
+        })
+      }
     }
   }
   

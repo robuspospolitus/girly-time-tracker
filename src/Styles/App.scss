@@ -108,7 +108,7 @@ h1 {
 }
 
 .page-animation-wrapper {
-    height: calc(100vh - 90px);
+    height: calc(100% - 90px);
     animation: startlist 0.5s ease-in;
 }
 .page-animation-wrapper-close {
@@ -133,12 +133,12 @@ h1 {
     to {transform: translateY(0); opacity: 1}
 }
 @keyframes startlist {
-    from {transform: translate(-200px); opacity: 0;}
-    to {transform: translate(0); opacity: 1;}
+    from {transform: translate(-200px); opacity: 0; height: calc(100vh - 90px);}
+    to {transform: translate(0); opacity: 1; height: calc(100vh - 90px);}
 }
 @keyframes closelist {
-    from {transform: translate(0); opacity: 1;}
-    to {transform: translate(200px); opacity: 0;}
+    from {transform: translate(0); opacity: 1; height: calc(100vh - 90px);}
+    to {transform: translate(200px); opacity: 0; height: calc(100vh - 90px);}
 }
 @keyframes gradient {
     to { background-position: 200% center; }

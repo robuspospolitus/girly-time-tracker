@@ -70,6 +70,7 @@ const Timer = ({ addItem }:item) => {
             const minutes = Math.floor((timer / 60) - hours*60);
             if (hours === 0 && minutes === 0) return;
             addItem([hours, minutes]);
+            handleReset();
         }
     }
 

@@ -62,9 +62,10 @@
     "web-vitals": "^2.1.4"
   },
   "build": {
-    "appId": "com.girly.timer",
+    "appId": "Girly Time Tracker",
     "productName": "GirlyTimeTracker",
     "asar": true,
+    "compression": "maximum",
     "files": [
       "build/**/*",
       "main.js",
