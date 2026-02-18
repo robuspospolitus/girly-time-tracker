@@ -1,6 +1,5 @@
 import { useCategoriesContext, useCategoryContext } from "./Utensils/CategoryContext";
 import { Dispatch, SetStateAction, useState, memo } from "react";
-import axios from "axios";
 import '../Styles/AddCategory.scss';
 import '../Styles/List.scss';
 
@@ -13,25 +12,26 @@ const AddCategory = memo(function({setItems}:ListProps) {
   const [category, setCategory] = useState('');
 
   // POST a category
-  const addCategory = () => {
+  const addCategory = async () => {
     const temp = category.toLowerCase();
-    if( temp !== '' && temp !== null && !categories.includes(temp)) {
-      setCategories([temp, ...categories]);
-      axios.post(`http://localhost:5000/api/data/${temp}`).then(() => {
+    if (temp && !categories.includes(temp)) {
+      try {
+        setCategories(prev => [temp, ...prev]);
         setCategory('');
-      }).catch((err) => {throw new Error(`Adding new item has failed: ${err}`)});
+      } catch(err) { throw new Error(`Adding category failed: ${err}`); }
     }
   }
 
   // DELETE a category
-  const deleteCategory = (e:string, isAll:boolean) => {
-    if(isAll) {
-      axios.delete(`http://localhost:5000/api/data/${e}`).then((response) => {
-        setItems(response.data);
-      }).catch((err) => {throw new Error(`Deleting an item has failed: ${err}`)});
-    }
-    setCategories(categories.filter((cat) => cat !== e))
-    setActual('');
+  const deleteCategory = async (e:string, isAll:boolean) => {
+    try {
+      if (isAll) {
+        const updatedData = await window.api.deleteCategory(e);
+        setItems(updatedData);
+      }
+      setCategories(prev => prev.filter(cat => cat !== e));
+      setActual('');
+    } catch(err) { throw new Error(`Deleting category failed: ${err}`); }
   }
   
   return(

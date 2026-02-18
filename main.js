@@ -1,14 +1,14 @@
 // main.js
-const { app } = require('electron');
+const { app, ipcMain } = require('electron');
 const path = require('path');
+const fs = require('fs');
 
-let serverProcess, win;
 let tray = null;
+let win = null;
 
 const gotTheLock = app.requestSingleInstanceLock();
 
 if (!gotTheLock) {
-    if(serverProcess) serverProcess.kill();
     app.quit();
 } else {
     app.on('second-instance', () => {
@@ -22,7 +22,7 @@ if (!gotTheLock) {
     app.once("ready", () => {
         if (process.platform === 'win32') app.setAppUserModelId("Girly Time Tracker");
         createWindow();
-        if(!serverProcess) createServer();
+        setupIPC();
         app.on('activate', () => {
             const { BrowserWindow } = require('electron');
             if (BrowserWindow.getAllWindows().length === 0) createWindow();
@@ -46,7 +46,6 @@ function createTray() {
         {
             label: 'Quit',
             click: () => { 
-                if (serverProcess) serverProcess.kill(); 
                 if (win) win.removeAllListeners('close');
                 app.quit(); 
             }
@@ -54,13 +53,6 @@ function createTray() {
     ])
     tray.setToolTip('Girly Time Tracker')
     tray.setContextMenu(contextMenu)
-}
-
-const createServer = () => {
-    if (serverProcess && !serverProcess.killed) return;
-    const { fork } = require('child_process'); 
-    const userDataPath = app.getPath('userData');
-    serverProcess = fork(path.join(__dirname, 'server', 'server.js'), [userDataPath]);
 }
 
 function createWindow() {
@@ -82,10 +74,45 @@ function createWindow() {
             nodeIntegration: false,
             contextIsolation: true,
             webSecurity: true,
+            preload: path.join(__dirname, 'preload.js'),
         }
     });
-    
     win.loadFile(path.join(__dirname, 'build', 'index.html'));
     win.setMenu(null);
     win.on('close', (e) => {e.preventDefault();win.hide();});
+}
+
+function setupIPC() {
+    const userDataPath = app.getPath('userData');
+    const dataPath = path.join(userDataPath, 'data.json');
+
+    if (!fs.existsSync(dataPath)) fs.writeFileSync(dataPath, JSON.stringify([{}], null, 2));
+    const readData = () => { return JSON.parse(fs.readFileSync(dataPath, 'utf-8')); };
+    const writeData = (data) => { fs.writeFileSync(dataPath, JSON.stringify(data, null, 2)); };
+
+    ipcMain.handle('get-data', () => { return readData()[0]; });
+
+    ipcMain.handle('post-category', (_, { category, payload }) => {
+        const data = readData();
+        if (payload) {
+            if (!data[0][category]) data[0][category] = [];
+            data[0][category].unshift(payload);
+            writeData(data);
+        }
+        return data[0][category];
+    });
+
+    ipcMain.handle('delete-item', (_, { category, id }) => {
+        const data = readData();
+        data[0][category] = data[0][category].filter(item => item.id !== id);
+        writeData(data);
+        return data[0][category];
+    });
+
+    ipcMain.handle('delete-category', (_, category) => {
+        const data = readData();
+        delete data[0][category];
+        writeData(data);
+        return data[0];
+    });
 }

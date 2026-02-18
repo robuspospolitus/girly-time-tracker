@@ -19,7 +19,7 @@ The fourth option is timer. Similar concept to stopwatch except you decide how m
 
 ## Data storing
 
-All data the user provides is saved on their personal computer. The application is not connected to any external server. It was intended to be quick, simple, and straightforward for my own use, so everything is saved to a JSON file. When the application is launched, it automatically launches its own personal server on port 5000 to allow for data changes and manipulation.
+All data the user provides is saved on their personal computer. The application is not connected to any external server. It was intended to be quick, simple, and straightforward for my own use, so everything is saved to a JSON file. When the application is launched, it automatically links to the file to allow for data changes and manipulation.
 
 ## Categories
 
@@ -27,7 +27,7 @@ Time can be entered into specific, separate categories. This way, hours spent on
 
 ## Themes
 
-The app offers a variety of color themes, allowing you to customize it to your taste. There are both light and dark themes. Currently, the primary theme is light orange. The application stores your chosen theme so it can launch the app with your chosen theme already set
+The app offers a variety of color themes, allowing you to customize it to your taste. There are both light and dark themes. Currently, the primary theme is light orange. The application stores your chosen theme so it can launch the app with your chosen theme already set.
 
 
 ## Future updates
@@ -36,14 +36,12 @@ The app offers a variety of color themes, allowing you to customize it to your t
 
 Sounds
 
-Notifications
-
 
 ## How to install?
 
 First open the terminal in the project directory.
 
-Type `npm install` and then `npm run build` and press enter. It can take a while
+Type `npm install` and then `npm run build` and press enter. It can take a while.
 
 After it's done building, go to `dist` folder.
 

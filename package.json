@@ -1,6 +1,6 @@
 {
   "name": "girly-time-tracker",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A simple time tracking app for personal use",
   "author": "Nadia github.com/robuspospolitus",
   "email": "nadia.gill2006@gmail.com",
@@ -10,13 +10,9 @@
   "dependencies": {
     "@mdi/js": "^7.4.47",
     "@mdi/react": "^1.6.1",
-    "axios": "^0.24.0",
-    "cors": "^2.8.5",
-    "express": "^5.1.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "sass": "^1.89.2",
-    "typescript": "^4.9.5"
+    "sass": "^1.89.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -25,7 +21,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "start-electron": "electron .",
-    "build": "npm run bundle-react && electron-builder",
+    "build": "npm run bundle-react && electron-builder --win portable --x64",
     "build-electron": "electron-builder"
   },
   "eslintConfig": {
@@ -59,6 +55,7 @@
     "esbuild": "^0.25.9",
     "esbuild-plugin-sass": "^1.0.1",
     "react-scripts": "5.0.1",
+    "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "build": {
@@ -69,10 +66,9 @@
     "files": [
       "build/**/*",
       "main.js",
-      "server/server.js",
+      "preload.js",
       "!**/*.test.js",
       "!**/*.map",
-      "!server/node_modules",
       "!**/*.test.*",
       "!**/coverage",
       "!**/public",

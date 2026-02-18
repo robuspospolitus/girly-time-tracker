@@ -1,6 +1,5 @@
 import { useCategoryContext, useCategoriesContext } from './Utensils/CategoryContext';
 import { useEffect, Dispatch, SetStateAction, memo, useMemo } from 'react';
-import axios from 'axios';
 import SelectCategory from './Utensils/SelectCategory';
 import '../Styles/Statistics.scss';
 import '../Styles/List.scss';
@@ -12,10 +11,13 @@ type StatProps = {
 const Statistics = memo(({ items, setItems }:StatProps) => {
     const [categories] = useCategoriesContext();
 
+    // GET data
     useEffect(() => {
-        axios.get("http://localhost:5000/api/data").then((response) => {
-            setItems(response.data);
-        }).catch((err) => {throw new Error(`Getting data from the server has failed: ${err}`)});
+        const fetchData = async () => {
+            const data = await window.api.getData();
+            setItems(data);
+        }
+        fetchData().catch((err) => {throw new Error(`Getting data from the server has failed: ${err}`)});
     }, []);
 
     // Total time spent on all activities

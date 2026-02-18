@@ -1,5 +1,4 @@
-import { useState, useEffect, Dispatch, SetStateAction, memo, useCallback, useMemo } from 'react';
-import axios from "axios";
+import { useState, useEffect, Dispatch, SetStateAction, memo, useMemo } from 'react';
 import Icon from '@mdi/react';
 import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 import { CategoriesProvider, useCategoryContext } from './Utensils/CategoryContext';
@@ -26,28 +25,32 @@ const List = memo(function({items, setItems}:ListProps) {
   
   // GET data
   useEffect(() => {
-    axios.get("http://localhost:5000/api/data").then((response) => {
-      setItems(response.data);
-    }).catch((err) => {throw new Error(`Getting data from the server has failed: ${err}`)});
+    const fetchData = async () => {
+      const data = await window.api.getData();
+      setItems(data);
+    }
+    fetchData().catch((err) => {throw new Error(`Getting data from the server has failed: ${err}`)});
   }, []);
 
   // DELETE an item
-  const deleteItem = (id:string) => {
-    axios.delete(`http://localhost:5000/api/data/${category}/${id}`).then((response) => {
-      setItems({...items,  [category]: response.data});
-    }).catch((err) => {throw new Error(`Deleting an item has failed: ${err}`)});
+  const deleteItem = async (id:string) => {
+    try {
+      const updatedCategory = await window.api.deleteItem(category, id);
+      setItems(prev => ({...prev, [category]: updatedCategory}));
+    } catch (err) { throw new Error(`Deleting an item has failed: ${err}`); }
   };
 
   // POST an item
-  const addItem = (time: Array<number>) => {
+  const addItem = async (time: Array<number>) => {
     if(inputType && time) {
       const today = new Date()
       const todaysdate = String(today.getDate()).padStart(2, '0')+'/'+String(today.getMonth() + 1).padStart(2, '0')+'/'+ today.getFullYear();
       const dateid = String(today.getDate()).padStart(2, '0')+String(today.getMonth() + 1).padStart(2, '0')+ today.getFullYear()+today.getHours()+today.getMinutes()+today.getSeconds()+today.getMilliseconds();
-      axios.post(`http://localhost:5000/api/data/${category}`, { id: dateid, date: todaysdate, hours: time[0], minutes: time[1] }).then((response) => {
-        setItems({...items, [category]: response.data});
-        notification({hours: time[0], minutes: time[1], category: category});
-      }).catch((err) => {throw new Error(`Adding new item has failed: ${err}`)});
+      try {
+        const updatedCategory = await window.api.postCategory(category, { id: dateid, date: todaysdate, hours: time[0], minutes: time[1] });
+        setItems(prev => ({...prev, [category]: updatedCategory}));
+        notification({ hours: time[0], minutes: time[1], category: category });
+      } catch(err) { throw new Error(`Adding new item has failed: ${err}`); }
     } else throw new Error('The function addItem() was called with undefined time value or inputType (which should be impossible)');
   };
 

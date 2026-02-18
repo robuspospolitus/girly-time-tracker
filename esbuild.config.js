@@ -5,6 +5,7 @@ esbuild.build({
   entryPoints: ['src/index.tsx'],
   bundle: true,
   minify: true,
+  treeShaking: true,
   sourcemap: false,
   outdir: 'build',
   plugins: [sassPlugin()],
