@@ -66,8 +66,8 @@ function createWindow() {
     if(!tray) createTray()
     win = new BrowserWindow({
         width: 600,
-        height: 700,
-        minWidth: 470,
+        height: 750,
+        minWidth: 540,
         minHeight: 400,
         icon: path.join(__dirname, 'build', 'favicon.ico'),
         webPreferences: {

@@ -1,6 +1,6 @@
 {
   "name": "girly-time-tracker",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "description": "A simple time tracking app for personal use",
   "author": "Nadia github.com/robuspospolitus",
   "email": "nadia.gill2006@gmail.com",
@@ -64,16 +64,9 @@
     "asar": true,
     "compression": "maximum",
     "files": [
-      "build/**/*",
       "main.js",
       "preload.js",
-      "!**/*.test.js",
-      "!**/*.map",
-      "!**/*.test.*",
-      "!**/coverage",
-      "!**/public",
-      "!**/*.md",
-      "!**/*.log"
+      "build/**/*"
     ],
     "extraMetadata": {
       "main": "main.js"

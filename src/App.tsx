@@ -1,7 +1,9 @@
 import { useLayoutEffect, useState } from "react";
 import { CategoryProvider, CategoriesProvider } from "./Components/Utensils/CategoryContext";
+import { useVolumeContext } from "./Components/Utensils/VolumeContext";
 import Icon from '@mdi/react';
 import ErrorBoundary, { ErrorFallback } from './Components/Utensils/ErrorBoundary';
+import { useGlobalSounds, setSoundVolume } from "./Components/Utensils/Sounds";
 
 const App = () => {
   const [items, setItems] = useState<{ [key: string]: Array<{id: string, date: string, hours: number, minutes: number}>}>({});
@@ -9,11 +11,13 @@ const App = () => {
   const [page, setPage] = useState('menu');
   const [isBack, setIsBack] = useState(false);
   const [theme, setTheme] = useState( localStorage.getItem('theme') || 'theme-light-orange');
+  const [volume] = useVolumeContext(); setSoundVolume(volume);
+  const { playClicked } = useGlobalSounds();
 
   useLayoutEffect(() => {
     localStorage.setItem('theme', theme);
   }, [theme]);
-  
+
   const getPage = (name:string) => {
     if(name === 'menu') {
       const Menu = require("./Components/Menu").default;
@@ -38,6 +42,7 @@ const App = () => {
   }
   const handleGoBack = () => {
     setIsBack(true);
+    playClicked();
     setTimeout(() => {
       setPage('menu');
       setIsBack(false);
@@ -46,17 +51,17 @@ const App = () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <div className={theme+ ' background ' + theme.split("-")[1]}>
-        <div id="main-app">
-          { page !== 'menu' && <div className="goback" onClick={() => handleGoBack()}> <Icon path={require('@mdi/js').mdiArrowLeft} className="gobackicon" title="arrow-left" size={1} color="white"/></div>}
-          <h1 className="logo">Girly Time Tracker</h1>
-          { page === 'menu' && getPage(page)}
-          { page === 'settings' && <div className={`page-animation-wrapper ${isBack && "page-animation-wrapper-close"}`}>{getPage(page)}</div>}
-          <CategoryProvider>
-            { (page === 'list' || page==='addcategory' || page==='statistics') && <div className={`page-animation-wrapper ${isBack && "page-animation-wrapper-close"}`}>{getPage(page)}</div>}
-          </CategoryProvider>
+        <div className={theme+ ' background ' + theme.split("-")[1]}>
+          <div id="main-app">
+            { page !== 'menu' && <div className="goback" onClick={() => handleGoBack()}> <Icon path={require('@mdi/js').mdiArrowLeft} className="gobackicon" title="arrow-left" size={1} color="white"/></div>}
+            <h1 className="logo">Girly Time Tracker</h1>
+            { page === 'menu' && getPage(page)}
+            { page === 'settings' && <div className={`page-animation-wrapper ${isBack && "page-animation-wrapper-close"}`}>{getPage(page)}</div>}
+            <CategoryProvider>
+              { (page === 'list' || page==='addcategory' || page==='statistics') && <div className={`page-animation-wrapper ${isBack && "page-animation-wrapper-close"}`}>{getPage(page)}</div>}
+            </CategoryProvider>
+          </div>
         </div>
-      </div>
     </ErrorBoundary>
   );
 }

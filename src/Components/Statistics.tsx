@@ -138,7 +138,7 @@ const CategoryStats = ({items}:catStatsProp) => {
 
     // Total time spent on an activity
     const totalTime = useMemo(() => {
-        if(!category) return [0, 0, 0];
+        if(!category || !items[category]) return [0, 0, 0];
         let totalTime = [0,0,0];
         for (let i = 0; i < length; i++) {
             totalTime[0] = totalTime[0] + items[category][i].hours + (items[category][i].minutes /60);
@@ -151,7 +151,7 @@ const CategoryStats = ({items}:catStatsProp) => {
 
     // Date of the first and last added time
     const addedTimeDate = useMemo(() => {
-        if(!category) return ['none', 'none'];
+        if(!category || !items[category]) return ['none', 'none'];
         const length = items[category] ? items[category].length - 1 : 0;
         const date = [items[category][length].date, items[category][0].date]
         return date;
@@ -159,7 +159,7 @@ const CategoryStats = ({items}:catStatsProp) => {
 
     // Most active month of the category
     const mostActiveMonth = useMemo(() => {
-        if(!category) return 'none';
+        if(!category || !items[category]) return 'none';
         let months = [''];
         for (let i = 0; i < length; i++) {
             const monthnum = parseInt(items[category][i].date[3] + items[category][i].date[4]);
@@ -204,7 +204,7 @@ const CategoryStats = ({items}:catStatsProp) => {
 
     // Returns average hours per all/month/week/days
     const averagePer = useMemo(() => {
-        if(!category) return [0, 0, 0, 0];
+        if(!category || !items[category]) return [0, 0, 0, 0];
         let averageTime = [0, 0, 0, 0];
         let months = 1;
         for (let i = 1; i < length; i++) {

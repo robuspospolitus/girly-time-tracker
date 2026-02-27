@@ -1,6 +1,7 @@
 import { useState } from "react";
 import HourToHour from "../HourToHour";
 import { useCategoryContext } from "../../Utensils/CategoryContext";
+import { useGlobalSounds } from "../../Utensils/Sounds";
 
 type item = {
     addItem: (time: Array<number>) => void,
@@ -9,8 +10,10 @@ const TimeToTime = ({ addItem }:item) => {
     const [hthFrom, setHthFrom] = useState({hour: 0, minutes: 0})
     const [hthTo, setHthTo] = useState({hour: 0, minutes: 0})
     const [category] = useCategoryContext();
+    const {playClicked} = useGlobalSounds();
 
     const handleSubmit = () => {
+        playClicked();
         let ttt = 0;
         if(category && hthFrom.hour >= 0 && hthFrom.hour <=23 && hthFrom.minutes >= 0 && hthFrom.minutes <= 59 && hthTo.hour >= 0 && hthTo.hour <= 23 && hthTo.minutes >= 0 && hthTo.minutes <= 59){
             if(hthFrom.hour < hthTo.hour) {

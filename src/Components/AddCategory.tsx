@@ -1,5 +1,6 @@
 import { useCategoriesContext, useCategoryContext } from "./Utensils/CategoryContext";
 import { Dispatch, SetStateAction, useState, memo } from "react";
+import { useGlobalSounds } from "./Utensils/Sounds";
 import '../Styles/AddCategory.scss';
 import '../Styles/List.scss';
 
@@ -10,9 +11,11 @@ const AddCategory = memo(function({setItems}:ListProps) {
   const [categories, setCategories] = useCategoriesContext();
   const [,setActual] = useCategoryContext();
   const [category, setCategory] = useState('');
+  const {playClicked} = useGlobalSounds();
 
   // POST a category
   const addCategory = async () => {
+    playClicked();
     const temp = category.toLowerCase();
     if (temp && !categories.includes(temp)) {
       try {

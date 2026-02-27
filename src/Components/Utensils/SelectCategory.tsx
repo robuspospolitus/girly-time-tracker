@@ -2,16 +2,18 @@ import Icon from '@mdi/react';
 import { mdiMenuDown, mdiMenuLeft } from '@mdi/js';
 import { useState } from "react";
 import { useCategoriesContext, useCategoryContext } from '../Utensils/CategoryContext';
+import { useGlobalSounds } from './Sounds';
 
 const SelectCategory = () => {
     const [open, setOpen] = useState(false);
     const [category, setCategory] = useCategoryContext();
     const [categories] = useCategoriesContext();
+    const {playClickedLower} = useGlobalSounds();
     
     return (
         <div className='select-category'>
             <div className='select'>
-                <div className='select-cat-title' onClick={() => setOpen(!open)}>
+                <div className='select-cat-title' onClick={() => {playClickedLower();setOpen(!open)}}>
                     <p className='select-subtitle'>{categories && categories.length ? category ? category : 'Choose a category...' : 'Go back to add a category'}</p>
                     <Icon path={open ? mdiMenuDown : mdiMenuLeft} color='#616161' size={1}/>
                 </div>

@@ -1,5 +1,6 @@
 import { useState, useRef } from "react"
 import { useCategoryContext } from "../../Utensils/CategoryContext"
+import { useGlobalSounds } from "../../Utensils/Sounds"
 import TimeFormat from "../TimeFormat"
 
 type item = { addItem: (time: Array<number>) => void }
@@ -8,9 +9,11 @@ const Stopwatch = ({ addItem }:item) => {
     const [stopwatch, setStopwatch] = useState(0)
     const [, setIsRunning] = useState(false);
     const [category]= useCategoryContext();
+    const {playClicked} = useGlobalSounds();
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const handleStopwatch = () => {
+        playClicked();
         setIsRunning(prev => {
             if (!prev && category) {
                 intervalRef.current = setInterval(() => {

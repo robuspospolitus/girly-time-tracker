@@ -29,14 +29,6 @@ Time can be entered into specific, separate categories. This way, hours spent on
 
 The app offers a variety of color themes, allowing you to customize it to your taste. There are both light and dark themes. Currently, the primary theme is light orange. The application stores your chosen theme so it can launch the app with your chosen theme already set.
 
-
-## Future updates
-
-### I plan to implement:
-
-Sounds
-
-
 ## How to install?
 
 First open the terminal in the project directory.

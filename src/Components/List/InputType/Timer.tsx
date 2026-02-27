@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useCategoryContext } from "../../Utensils/CategoryContext";
 import HourToHour from "../HourToHour";
 import TimeFormat from "../TimeFormat";
+import { useGlobalSounds } from "../../Utensils/Sounds";
 
 type item = { addItem: (time: Array<number>) => void }
 
@@ -13,12 +14,14 @@ const Timer = ({ addItem }:item) => {
     const [reset, setReset] = useState(false);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const resetRef = useRef(reset);
+    const {playClicked, playTimer} = useGlobalSounds();
 
     useEffect(() => {
         resetRef.current = reset;
     }, [reset]);
     
     const handleTimer = () => {
+        playTimer();
         if(!isTimerRunning){
             const hours = timerHth.hour > 0 ? 
             timerHth.hour < 24 ?
@@ -34,6 +37,7 @@ const Timer = ({ addItem }:item) => {
     }
 
     const handleStopTimer = () => {
+        playClicked();
         if(!timer || !category) return;
         setReset(false);
         setIsTimerRunning(prev => {

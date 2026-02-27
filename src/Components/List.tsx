@@ -7,6 +7,7 @@ import TimeToTime from './List/InputType/TimeToTime';
 import Stopwatch from './List/InputType/Stopwatch';
 import Timer from './List/InputType/Timer';
 import SelectCategory from './Utensils/SelectCategory';
+import { useGlobalSounds } from './Utensils/Sounds';
 import '../Styles/HourToHour.scss'
 import '../Styles/List.scss';
 
@@ -22,6 +23,7 @@ type ListProps = {
 const List = memo(function({items, setItems}:ListProps) {
   const [inputType, setInputType] = useState('hours & minutes');
   const [category] = useCategoryContext();
+  const {playSmall} = useGlobalSounds();
   
   // GET data
   useEffect(() => {
@@ -69,6 +71,7 @@ const List = memo(function({items, setItems}:ListProps) {
 
   // Change input type
   const handleInputChange = (e:string) => {
+    playSmall();
     const inputTypes = ['hours & minutes', 'time to time', 'stopwatch', 'timer']
     if(e === 'prev'){
       if (inputTypes.indexOf(inputType) === 0) setInputType(inputTypes[inputTypes.length - 1]);

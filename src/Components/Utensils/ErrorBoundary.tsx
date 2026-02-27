@@ -34,8 +34,13 @@ class ErrorBoundary extends React.Component<
 export function ErrorFallback({ error }: { error: Error }) {
   return (
     <div role="alert">
-      There was an error:{' '}
-      <pre style={{ whiteSpace: 'normal' }}>{error.message}</pre>
+      <div className={'theme-light-mono background light'}>
+        <div id="main-app">
+          <h1 className="logo">Girly Time Tracker</h1>
+          <p style={{textAlign: "center", fontSize: "30px", marginTop: "20px", marginBottom: "12px"}}>There was an error:{' '}</p>
+          <pre style={{whiteSpace: 'normal', textAlign: "center"}}>{error.message}</pre>
+        </div>
+      </div>
     </div>
   );
 }
