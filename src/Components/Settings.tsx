@@ -67,6 +67,16 @@ const Settings = memo(function({setTheme}: propsSettings) {
                  </div>
             </div>
             <div className="settingsitem">
+                <div className="settingstitle" onClick={() => handleOpen(3)}>
+                    <p className='settingsitemp'>Sound volume</p>
+                    <Icon path={open===3 ? mdiMenuDown : mdiMenuLeft} className='icon' size={2}/>
+                </div>
+                <div className="themetable settingsinfo" style={{maxHeight: `${open===3 ? "90px":0}`, opacity: `${open===3 ? 1:0}`, flexDirection: "row", height: "40px", alignItems:"center"}}>
+                    <h3>Volume:</h3>
+                    <input id="volumeInput" type='number' min={0} max={100} value={percentage} onChange={(e) => {handleChangeVolume(Number(e.target.value))}}/>
+                </div>
+            </div>
+            <div className="settingsitem">
                 <div className="settingstitle" onClick={() => handleOpen(2)}>
                     <p className='settingsitemp'>Credits</p>
                     <Icon path={open===2 ? mdiMenuDown : mdiMenuLeft} className='icon' size={2}/>
@@ -99,16 +109,6 @@ const Settings = memo(function({setTheme}: propsSettings) {
                         <p>Mechanical Plastic Click 10 by <a href='https://freesound.org/people/SmallConfusion/sounds/751088/'>SmallConfusion</a></p>
                     </div>
                     <p style={{marginTop: "32px", marginBottom: "8px", textAlign: "center"}}>All used licenced assets are either freeware or CC0 except change input sound</p>
-                </div>
-            </div>
-            <div className="settingsitem">
-                <div className="settingstitle" onClick={() => handleOpen(3)}>
-                    <p className='settingsitemp'>Sound volume</p>
-                    <Icon path={open===3 ? mdiMenuDown : mdiMenuLeft} className='icon' size={2}/>
-                </div>
-                <div className="themetable settingsinfo" style={{maxHeight: `${open===3 ? "90px":0}`, opacity: `${open===3 ? 1:0}`, flexDirection: "row", height: "40px", alignItems:"center"}}>
-                    <h3>Volume:</h3>
-                    <input id="volumeInput" type='number' min={0} max={100} value={percentage} onChange={(e) => {handleChangeVolume(Number(e.target.value))}}/>
                 </div>
             </div>
         </div>
