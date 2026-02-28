@@ -41,8 +41,6 @@ Just extract the `GirlyTimeTracker 0.1.x.exe` file wherever you'd like and that'
 
 There is no need to keep the repository afterwards.
 
-Download options soon...
-
 ## How to use?
 
 Open `GirlyTimeTracker 0.1.x.exe`.

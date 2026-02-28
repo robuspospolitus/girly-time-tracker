@@ -39,7 +39,6 @@ const Settings = memo(function({setTheme}: propsSettings) {
             setPercentage(val);
             setVolume(val/100);
             setSoundVolume(val/100);
-            playSmall();
         }
     }
     return (
@@ -73,7 +72,7 @@ const Settings = memo(function({setTheme}: propsSettings) {
                 </div>
                 <div className="themetable settingsinfo" style={{maxHeight: `${open===3 ? "90px":0}`, opacity: `${open===3 ? 1:0}`, flexDirection: "row", height: "40px", alignItems:"center"}}>
                     <h3>Volume:</h3>
-                    <input id="volumeInput" type='number' min={0} max={100} value={percentage} onChange={(e) => {handleChangeVolume(Number(e.target.value))}}/>
+                    <input id="volumeInput" type='range' min={0} max={100} value={percentage} onChange={(e) => {handleChangeVolume(Number(e.target.value))}}/>
                 </div>
             </div>
             <div className="settingsitem">
