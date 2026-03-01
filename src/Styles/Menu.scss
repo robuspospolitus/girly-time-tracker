@@ -22,6 +22,8 @@
 .menuitem::before {
     content: "";
     position: absolute;
+    width: 400px;
+    height: 50px;
     inset: 0;
     background-color: var(--item-background);
     border-radius: 10px;

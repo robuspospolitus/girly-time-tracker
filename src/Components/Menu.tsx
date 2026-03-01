@@ -1,6 +1,5 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { useGlobalSounds } from './Utensils/Sounds';
-import { useVolumeContext } from './Utensils/VolumeContext';
 import '../Styles/Menu.scss';
 
 type propsMenu = {

@@ -2,33 +2,17 @@
   "name": "girly-time-tracker",
   "version": "0.1.8",
   "description": "A simple time tracking app for personal use",
-  "author": "Nadia github.com/robuspospolitus",
-  "email": "nadia.gill2006@gmail.com",
+  "author": "Nadia Gill <nadia.gill2006@gmail.com> (https://github.com/robuspospolitus)",
   "main": "main.js",
   "private": true,
   "homepage": "./",
-  "dependencies": {
-    "@mdi/js": "^7.4.47",
-    "@mdi/react": "^1.6.1",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "sass": "^1.89.2"
-  },
   "scripts": {
     "start": "react-scripts start",
-    "build-react": "react-scripts build",
     "bundle-react": "node esbuild.config.js",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "start-electron": "electron .",
-    "build": "npm run bundle-react && electron-builder --win portable --x64",
+    "build": "npm run bundle-react && electron-builder",
+    "build-linux": "npm run bundle-react && electron-builder --linux apk",
     "build-electron": "electron-builder"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -43,6 +27,8 @@
     ]
   },
   "devDependencies": {
+    "@mdi/js": "^7.4.47",
+    "@mdi/react": "^1.6.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -50,11 +36,14 @@
     "@types/node": "^24.2.1",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
-    "electron": "^37.2.4",
-    "electron-builder": "^26.0.12",
+    "electron": "^8.0.0",
+    "electron-builder": "^22.14.11",
     "esbuild": "^0.25.9",
     "esbuild-plugin-sass": "^1.0.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "react-scripts": "5.0.1",
+    "sass": "^1.89.2",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -63,6 +52,8 @@
     "productName": "GirlyTimeTracker",
     "asar": true,
     "compression": "maximum",
+    "removePackageScripts": true,
+    "afterPack": "cleanup.js",
     "files": [
       "main.js",
       "preload.js",
@@ -74,9 +65,35 @@
     "directories": {
       "output": "dist"
     },
-    "win": {
-      "target": "portable",
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
       "icon": "icon.ico"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "icon.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "apk"
+      ],
+      "icon": "icon.ico"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowElevation": false,
+      "allowToChangeInstallationDirectory": false,
+      "differentialPackage": true,
+      "createDesktopShortcut": true,
+      "runAfterFinish": true
     }
   }
 }

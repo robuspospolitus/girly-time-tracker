@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import "./Styles/App.scss";
+import "./Styles/List.scss";
 import "./Variables.scss";
 import { VolumeProvider } from './Components/Utensils/VolumeContext';
 
