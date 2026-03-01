@@ -1,54 +1,86 @@
 # Girly time tracker
 
-Girly Time Tracker is a simple and fun app for collecting an
-d tracking time spent on specific activities. Recommended for everyday use, especially for activities like training, work, or hobbies. A pleasant alternative for those who don't use spreadsheets or are encouraged by the app's design.
+Girly Time Tracker is a desktop time tracking application built with React, TypeScript, and Electron, designed to combine structured activity tracking with a customizable and visually engaging interface.
 
-This project is in development. New updates are constantly being released, introducing new content and improvements.
+The project was developed as a practical exploration of desktop application architecture using modern frontend technologies. It focuses on state management, local data persistence, theming systems, and production build configuration within the Electron ecosystem.
+
+This project is now completed and represents a finished learning milestone in building and packaging cross-platform desktop applications.
+
+Although it is no longer under active development, feedback, suggestions, and issue reports are always welcome.
 
 ## Time tracking
 
-The app counts a set of hours from a given category. You can easily add or remove hours as needed. There are four formats available for adding hours. 
+The application allows users to track time within separate activity categories using four different input methods
 
-The first one is entering specific hours and minutes spent on the activity. 
+- Manual Entry. Enter a specific number of hours and minutes spent on an activity.
+- Time Range Input. Provide a start and end time (e.g., 15:30–19:20), and the app automatically calculates the duration.
+- Stopwatch Mode. Start tracking, leave the app running during the activity, and stop it when finished.
+- Timer Mode. Set a predefined duration for an activity. The timer ends automatically when the selected time is reached.
 
-The second option is to input a time period (for example from 15:30 to 19:20).
-
-The third option is to use a stopwatch. Just leave the app open while you do your stuff and press stop when you finish.
-
-The fourth option is timer. Similar concept to stopwatch except you decide how much time you want to spend on an activity at the beginning and you don't have to manually stop for it to end.
-
-## Data storing
-
-All data the user provides is saved on their personal computer. The application is not connected to any external server. It was intended to be quick, simple, and straightforward for my own use, so everything is saved to a JSON file. When the application is launched, it automatically links to the file to allow for data changes and manipulation.
+This flexibility allows users to adapt time tracking to different workflows and use cases (work, training, hobbies, etc.).
 
 ## Categories
 
-Time can be entered into specific, separate categories. This way, hours spent on, for example, strength training and cardio are separated. These can be added or removed at will. You have the choice to delete the data upon deleting the category or leave them saved. To retrieve them just add the category of the same name as the one deleted.
+Time entries are organized into separate categories.
+
+Users can:
+- Create and delete categories freely
+- Decide whether to remove associated data when deleting a category
+- Restore previously stored data by recreating a category with the same name
+
+This approach keeps different activity types (e.g., strength training vs. cardio, work vs. personal projects) clearly separated.
+
+## Data storing
+
+All user data is stored locally on the user's computer.
+
+- The application does not connect to any external servers
+- No data is transmitted or collected
+- All information is stored in a local JSON file
+
+When the application launches, it automatically loads and synchronizes with the local file, allowing immediate access and modification of stored data.
+
+This desktop-first approach ensures simplicity, privacy, and full user control over stored information.
 
 ## Themes
 
-The app offers a variety of color themes, allowing you to customize it to your taste. There are both light and dark themes. Currently, the primary theme is light orange. The application stores your chosen theme so it can launch the app with your chosen theme already set.
+The app includes multiple customizable color themes, including both light and dark variants. The default theme is light orange. The selected theme is saved locally. The application automatically launches with the previously selected theme. The theming system was implemented to improve user experience and demonstrate UI state persistence.
 
 ## How to install?
 
-First open the terminal in the project directory.
+### Download
 
-Type `npm install` and then `npm run build` and press enter. It can take a while.
+You can download and install this app from [Releases page](https://github.com/robuspospolitus/girly-time-tracker/releases)
 
-After it's done building, go to `dist` folder.
+### Build
 
-Just extract the `GirlyTimeTracker 0.1.x.exe` file wherever you'd like and that's it!
+> [!NOTE]
+> Before building the app it is recommended to check the `package.json` file to configure the desired installer
 
-There is no need to keep the repository afterwards.
+1. Open a terminal in the project directory.
+3. Run:
+```
+npm install
+npm run build
+```
+4. After the build process completes, navigate to the `dist` folder.
+5. Extract the generated `GirlyTimeTracker 0.1.x.exe` file to your desired location.
+6. Run the executable — no additional setup required.
+
+The repository is not required after building the application.
 
 ## How to use?
 
-Open `GirlyTimeTracker 0.1.x.exe`.
+1. Launch `GirlyTimeTracker 0.1.x.exe`.
+2. Create a category from the Add Category page.
+3. Start tracking time using your preferred tracking mode.
 
-First you need to add a category by clicking 'Add a category' in the main menu.
+## Screenshots
 
-After doing that you are ready to track time!
+![Screenshot of the main menu](/screenshots/menu.png?raw=true "Menu") ![Screenshot of the list page](/screenshots/list.png?raw=true "List") 
+![Screenshot of the statistics page](/screenshots/statistics.png?raw=true "Statistics") ![Screenshot of the settings](/screenshots/settings.png?raw=true "Settings")
 
-## THANK YOU!!
+## THANK YOU
 
-Stay tuned and remember to use glitter to your paperwork and documentation. <3
+Thank you for checking out this project.
+Feedback and suggestions are welcome.

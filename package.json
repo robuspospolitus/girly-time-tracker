@@ -11,7 +11,8 @@
     "bundle-react": "node esbuild.config.js",
     "start-electron": "electron .",
     "build": "npm run bundle-react && electron-builder",
-    "build-linux": "npm run bundle-react && electron-builder --linux apk",
+    "build-linux": "npm run bundle-react && electron-builder --linux apk --x64",
+    "build-mac": "npm run bundle-react && electron-builder --mac dmg --x64",
     "build-electron": "electron-builder"
   },
   "browserslist": {
@@ -84,13 +85,13 @@
         "AppImage",
         "apk"
       ],
-      "icon": "icon.ico"
+      "icon": "icon.png"
     },
     "nsis": {
-      "oneClick": true,
+      "oneClick": false,
       "perMachine": false,
       "allowElevation": false,
-      "allowToChangeInstallationDirectory": false,
+      "allowToChangeInstallationDirectory": true,
       "differentialPackage": true,
       "createDesktopShortcut": true,
       "runAfterFinish": true
